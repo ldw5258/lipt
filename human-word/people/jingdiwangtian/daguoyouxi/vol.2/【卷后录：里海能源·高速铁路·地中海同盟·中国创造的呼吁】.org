@@ -1,0 +1,9 @@
+# -*- org -*-
+
+# Time-stamp: <2011-08-30 16:13:20 Tuesday by ldw>
+
+#+OPTIONS: ^:nil author:nil timestamp:nil creator:nil H:2
+
+#+STARTUP: indent
+
+#+TITLE: 【卷后录：里海能源·高速铁路·地中海同盟·中国创造的呼吁】

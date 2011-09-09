@@ -725,7 +725,7 @@
          :auto-preamble t
          )
         ("lipt-static"
-         :base-directory "~/www/"
+         :base-directory "~/lipt/"
          :base-extension "css\\|js\\|png\\|jpg\\|jpeg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"
          :publishing-directory "~/www/"
          :recursive t

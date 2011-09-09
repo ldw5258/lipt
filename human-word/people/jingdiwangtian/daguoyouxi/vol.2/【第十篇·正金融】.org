@@ -1,0 +1,9 @@
+# -*- org -*-
+
+# Time-stamp: <2011-08-30 16:13:06 Tuesday by ldw>
+
+#+OPTIONS: ^:nil author:nil timestamp:nil creator:nil H:2
+
+#+STARTUP: indent
+
+#+TITLE: 【第十篇·正金融】

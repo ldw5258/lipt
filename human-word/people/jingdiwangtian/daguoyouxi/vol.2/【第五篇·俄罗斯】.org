@@ -1,0 +1,9 @@
+# -*- org -*-
+
+# Time-stamp: <2011-08-30 16:12:32 Tuesday by ldw>
+
+#+OPTIONS: ^:nil author:nil timestamp:nil creator:nil H:2
+
+#+STARTUP: indent
+
+#+TITLE: 【第五篇·俄罗斯】
