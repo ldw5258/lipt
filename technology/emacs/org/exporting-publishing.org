@@ -1,0 +1,703 @@
+# -*- org -*-
+
+# Time-stamp: <2011-09-09 00:42:00 Friday by ldw>
+
+#+OPTIONS: ^:nil author:nil timestamp:nil creator:nil H:3
+
+#+STARTUP: indent
+
+
+来源: http://orgmode.org/worg/org-tutorials/org-publish-html-tutorial.html
+
+** 将Org-mode文件导出为HTML文件
+
+*** 基本设置
+
+假设所有的Org-mode文件在文件夹 =~/org/= 中，将它们导出到 =~/public_html/= 文件夹中。
+
+创建如下目录结构：
+
+#+begin_example
+~/org/
+   |- css/
+   |  `- stylesheet.css
+   |- img/
+   |- index.org
+   `- remember.org
+#+end_example
+
+在index.org文件中链接到文件remember.org。
+
+: [[file:remember.org][remember]]
+
+Org 会将上面代码导出为HTML链接:
+
+: <a href="./remember.html">remember</a>
+
+对图像同样适用。 有图像 =~/org/img/test.jpg= ，如下链接：
+
+: [[file:img/test.jpg]]
+
+用鼠标点击可以测试上面的链接，也可以转换到 =iimage-mode= [fn:exporthtmlpublishing01] 在Emacs中查看图片。
+
+[fn:exporthtmlpublishing01] …by typing M-x iimage-mode RET. iimage-mode even shows *.svg images, if librsvg was present on compile time. FIXME: is this true for emacs22 ?
+
+Optionally, set up the stylesheet as shown in section Special comment section. The recommended way is to use a real stylesheet though.
+
+*** 导出 /org/ 项目
+
+将 =~/org/= 项目导出为HTML文件，我们需要设置变量 =org-publish-project-alist= [fn:exporthtmlpublishing03]。 我将每个项目细分为三个基本组件，使用两个不同的函数可以导出动态内容(org => html)和静态内容如脚本，图像，电子表格甚至(or even).htaccess 文件 (org => copy). 第三个组件仅仅是为了方便并告诉org执行前面的两个组件。
+
+[fn:exporthtmlpublishing03] All components of =org-publish-projects-alist= are documented in the [[http://orgmode.org/manual/Project-alist.html#Project-alist][Org Mode Manual. ]]
+
+=org-publish-project-alist= 自定义设置(=M-x customize-variable RET org-publish-project-alist RET=)，但我更喜欢使用外部文件设置我的项目，这样有更多的选择。在 *scratch* buffer[fn:exporthtmlpublishing04] 中输入如下的 Lisp 代码。
+
+[fn:exporthtmlpublishing04]] 快捷键命令: =C-x s=
+
+首先,在 *scratch* buffer 中输入:
+
+#+begin_src lisp
+(require 'org-publish)
+(setq org-publish-project-alist
+      '(
+
+       ;; ... add all the components here (see below)...
+
+      ))
+#+end_src
+
+确保所有的组件位于注释行的下面。
+
+*** /notes/ 组件
+
+notes组件将org文件导出为HTML文件。将 =publishing-function= 设置为 =org-publish-org-to-html= 。示例如下：
+
+#+begin_src Lisp
+("org-notes"
+ :base-directory "~/org/"
+ :base-extension "org"
+ :publishing-directory "~/public_html/"
+ :recursive t
+ :publishing-function org-publish-org-to-html
+ :headline-levels 4             ; Just the default for this project.
+ :auto-preamble t
+ )
+#+end_src
+
+*注意* : =headline-levels= 的默认值可能被[[重写缺省值][每个文件的基本设置]]中被重写。
+
+这里是最重要的设置:
+
+   | =base-directory=       | 组件的根目录                                                                                   |
+   | =base-extension=       | 文件名不含'.'的后缀                                                                            |
+   | =publishing-directory= | 所有文件将要被导出到的根目录                                                                   |
+   | =recursive=            | 如果是 =t=, 包含子目录(我们所希望的). =:publishing-directory= 中的子目录如果不存在，会自动创建 |
+   | =publishing-function=  | 在本组件中提供怎样处理org文件的函数. 该实例中: 将Org-mode文件转换为HTML文件.                   |
+
+*** /static/ 组件
+
+/static/ 组件只是复制文件(包括目录)，从 =:base-directory= 复制gc  =:publishing-directory= ，并不改变文件的内容。只需告诉Org-mode使用函数 =org-publish-attachment=:
+
+#+begin_src Lisp
+("org-static"
+ :base-directory "~/org/"
+ :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"
+ :publishing-directory "~/public_html/"
+ :recursive t
+ :publishing-function org-publish-attachment
+ )
+#+end_src
+
+*注意* =:publishing-function= 设置为 =org-publish-attachment= 。
+
+*** /publish/ 组件
+
+为了通过一个命令执行导出所有内容，添加 /publish/ 组件. 该组件中，我通常丢弃后缀，只使用项目的基本名称。
+
+#+begin_src Lisp
+ ("org" :components ("org-notes" "org-static"))
+#+end_src
+
+现在 =M-x org-publish-project RET org RET= 会递归地导出所有内容到目录 =~/public_html/=. 目标目录如果不存在会自动创建。
+   don't yet exist.
+
+*** 导出
+
+
+ 将所有的导出组件输入 =*scratch*= buffer 中，再次确认所有的组件在注释所在的括号之中。
+
+#+begin_src Lisp
+(require 'org-publish)
+(setq org-publish-project-alist
+      '(
+
+       ;; ... all the components ...
+
+      ))
+#+end_src
+
+ 移动光标到第一行的最后，按下组合键 =C-x C-e= 加载 =org-publish=. 现在移动光标到最后一行再次执行 =C-x C-e=. 每次代码变化后重复最后一步改变你的 =org-publish-project-alist=.
+
+
+ 导出Org-mode文件只需输入 =M-x org-publish-project RET org RET= 或者使用手册中的快捷键. 如果没有错误, 且 =mod_userdir= 已经设置，你应该可以通过你的浏览器定位到 http://localhost/~user/. 如果没有，就在地址栏中输入file:///home/user/public_html (你可以使用 /file -> open/ 从对话框中选择)
+
+** 增加子目录
+
+随着我们添加越来越多的文件到 =~/org/=, 文件名很快就会像'=networking-ssh-sshd-config.org='或者更长. 我们所需要的是一个目录结构:
+
+  :~/org/
+  :   |- css/
+  :   |  `- stylesheet.css
+  :   |- Emacs
+  :   |  |- index.org
+  :   |  |- gnus.org
+  :   |  |- org.org
+  :   |  `- snippets.org
+  :   |- img/
+  :   |- index.org
+  :   `- remember.org
+
+如果还没有在 /notes/ 和 /static/ 组件中添加
+:      :recursive t
+
+必须在最后设置以导出子目录。
+
+** 重写缺省值
+
+=org-publish-project-alist= 的默认值可以被复写. 你也许想要为单个文件调整导出参数. 比如标题层级, 嵌入外部脚本或者不同的电子表格。Org 提供多种方法为单个文件修改设置。
+
+** 导出选项模板
+
+这是第一选择, 位于文件的顶部。在Org-mode 文件中, =M-x org-insert-export-options-template= 可以达到目的,该命令在文件的开头添加下面几行内容:
+
+
+#+begin_example
+#+TITLE:     exporting-publishing.org
+#+AUTHOR:    L.D.W
+#+EMAIL:     ldw5258@gmail.com
+#+DATE:      2011-09-08 Thu
+#+DESCRIPTION:
+#+KEYWORDS:
+#+LANGUAGE:  en
+#+TEXT:      Some descriptive text to be emitted.  Several lines OK.
+#+OPTIONS:   H:3 num:t toc:t \n:nil @:t ::t |:t ^:nil -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+#+XSLT:
+#+STYLE:    <link rel="stylesheet" type="text/css" href="../stylesheet.css" />
+#+end_example
+
+我们所要做的只是改变这些选项以适应我们的需要。所有的选项都列在了Org-mode手册中. *注意* , 这些选项在在文件读入的时候才被分析. 显示地应用你的新选项，移动光到任意一行，并执行 =C-c= 两次.
+
+** <<<特殊注释部分>>>
+
+同样，CSS 变量可以使用特殊部分插入/添加到Org-mode文件:
+
+   : * COMMENT html style specifications
+   :
+   : # Local Variables:
+   : # org-export-html-style: "<link rel=\"stylesheet\" type=\"text/css\" href=\"css/stylesheet.css\" />"
+   : # End:
+
+=css/stylesheet.css= 在根目录中改变文件外形的需要. 在子目录中使用 \\
+=../css/stylesheet.css=  (第一级),第二级子目录中使用 \\
+=../../css/stylesheet.css= .
+
+
+** 导出模板之恶
+
+面对数量多的文件，在文件中添加相同的导出选项并调整它的标题和路径是一件十分令人感到厌烦的事情。Org-mode支持懒惰并提供了另一种方法设置文件。我们只需要一个目录(e.g. =~/.emacs.d/org-templates/=) 并创建下面的文件:
+
+ + =level-0.org= \\
+该文件包含所有的导出选项行。特殊注释部分对子文件中的选项行没有作用。因此我们总是使用这些导出行
+
+: #+STYLE: <link rel="stylesheet" type="text/css" href="stylesheet.css" />
+
+...这对项目根文件夹中的每个文件(如例子中的 =~/org/= 或者 =~/B/= )都适用. 需要排除 =#+TITLE= 行，因为对每个文件标题都是不同的，并且在导出时自动设置(based on the filename if omitted).
+
+ + =level-1.org= \\
+该文件包含适合项目根文件夹子目录中所有文件全部导出行(e.g. =~/org/emacs/= 或者 =~/org/networking/=). 需要舍弃 =#+TITLE=. stylesheet的选项行:
+
+: #+STYLE: <link rel="stylesheet" type="text/css" href="../stylesheet.css" />
+
+ + 添加更多的文件和级数(levels)
+
+现在删除项目文件夹中Org-mode文件末尾的特殊注释部分并改变导出选项模板为:
+
+: #+SETUPFILE: ~/.emacs.d/org-templates/level-N.org
+: #+TITLE: My Title
+
+用到项目文件到根文件夹的距离替换 =N= (=0=, =1= etc.) 在这两行上 =C-c= 两次使用变化起作用。然后这些行复写了该文件的设置。
+
+
+** 更多级文件
+同样，/level-N/ 文件提供易于转换两种不同设置的机会。例如，我们有分开的stylesheet， =org-info.js= 用于设置显示(presentations), 将适合的选项放进名为 =level-0-slides.org= 的文件中:
+
+  : #+INFOJS_OPT: path:org-info.js
+  : #+INFOJS_OPT: toc:nil view:slide
+  : #+STYLE: <link rel="stylesheet" type="text/css" href="slides.css" />
+
+现在只要输入 '/-slides/' 改变项目中任何文件的外观。
+
+* 更多项目
+
+随着我们习惯于在org文件中作笔记，可能在大多数项目中添加目录 =org= 。所有项目都要被导出。项目 '=~/B/=' 导出到 '=~/public_html/B/=', '=~/C/=' 导出到 '=~/public_html/C/=', 等等. 这通用stylesheets和当前JavaScripts的问题 --- 并且需要新的组件.
+
+** /inherit/ 组件
+
+一旦厌烦了从一个项目复制静态文件到另一个，下面的配置可以帮助我们。添加 /inherit/ 组件，从目录 =~/org/= 导入所有静态文件[fn:exporthtmlpublishing05].从现在起，这里足够编辑电子表格和脚本。
+
+[fn:exporthtmlpublishing05] 文件可以从任何源目录复制到目标目录。
+
+#+begin_src Lisp
+ ("B-inherit"
+  :base-directory "~/org/"
+  :recursive t
+  :base-extension "css\\|js"
+  :publishing-directory "~/public_html/B/"
+  :publishing-function org-publish-attachment
+ )
+
+ ("B-org"
+ :base-directory "~/B/"
+ :auto-index t
+ :index-filename "sitemap.org"
+ :index-title "Sitemap"
+ :recursive t
+ :base-extension "org"
+ :publishing-directory "~/public_html/B/"
+ :publishing-function org-publish-org-to-html
+ :headline-levels 3
+ :auto-preamble t
+ )
+ ("B-static"
+  :base-directory "~/B/"
+  :recursive t
+  :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"
+  :publishing-directory "~/public_html/B/"
+  :publishing-function org-publish-attachment)
+
+ ("B" :components ("B-inherit" "B-notes" "B-static"))
+#+end_src
+
+*注意*, that the inheritance trick works for non org directories. You might
+   want to keep all your stylesheets and scripts in a single place, or even add
+   more /inheritance/ to your projects, to import sources from upstream.
+
+*注意* also, that =B-inherit= exports directly to the web. If you want to track
+   the changes to =~org/*.css= directly in =~/B=, you must ensure, that =B-inherit= is
+   the first component in =B= since the components in =B= are executed in
+   the sequence listed: first get the new stylesheet into =B=, then execute
+   =B-static=.
+
+*** 另一个例子
+
+As I use [[file:../code/org-info-js/index.org][org-info.js]] and track Worg git, I use "=inherit-org-info-js=" in all my =org= projects:
+
+#+begin_src Lisp
+ ("inherit-org-info-js"
+  :base-directory "~/develop/org/Worg/code/org-info-js/"
+  :recursive t
+  :base-extension "js"
+  :publishing-directory "~/org/"
+  :publishing-function org-publish-attachment)
+
+ ;; ... all the rest ... ;;
+
+ ("B" :components ("inherit-org-info-js" "B-inherit" "B-notes" "B-static"))
+ ("C" :components ("inherit-org-info-js" "C-inherit" "C-notes" "C-static"))
+ ("D" :components ("inherit-org-info-js" "D-inherit" "D-notes" "D-static"))
+ ("E" :components ("inherit-org-info-js" "E-inherit" "E-notes" "E-static"))
+#+end_src
+
+...means, =B= =C= =D= and =E= use my local stylesheets and always the latest version of =org-info.js=.
+
+* Overview
+
+  Once there are lots of files and subdirectories, we're in the need of ways to
+  easily navigate our notes in a browser. What we need now, is an index, an
+  overview of all our note files.
+
+** The sitemap
+
+Org-modes great publishing also generates a recursive sitemap. It's name defaults to =sitemap.org=, which get's in our way, since we have a real startpage as =sitemap.html= [fn:exporthtmlpublishing06]. Fortunately there is a configuration option to change the name of the generated sitemap. To generate the sitemap, add these lines to the /notes/ component:
+
+[fn:exporthtmlpublishing06] This is primarily because of the behaviour of servers. When we navigate to http://orgmode.org/worg/ we will face the index.html if prese
+
+#+begin_src Lisp
+ :auto-sitemap t                ; Generate sitemap.org automagically...
+ :sitemap-filename "sitemap.org"  ; ... call it sitemap.org (it's the default)...
+ :sitemap-title "Sitemap"         ; ... with title 'Sitemap'.
+#+end_src
+
+The sitemap will reflect the tree structure of the project. To access the sitemap easily, we could do two things:
+
+   1. Setup the '/UP/' link of the Startpage to link to =sitemap.html= (see next
+      section),
+   2. use the '=#+INCLUDE: sitemap.org=' directive. Most of my Org-mode files
+      contain a chapter called "/Links/" at the end of the file, which contains
+      a subsection /Sitemap/ that in turn just consists of that
+      diretive. For the =index.org= files in the root directory, I include the
+      sitemap as the first section.
+
+   You can also change the position of folders with =:sitemap-sort-folders=,
+   this can be set to =last= or =first= (default), to display folders last or 
+   first.
+
+** org-info.js
+
+   Another way to get additional links to navigate the structure is
+   [[file:../code/org-info-js/index.org][org-info.js]]. Let's set it up like this (either in every file, or in
+   =org-level-N.org=, where =N > 0=):
+
+   : #+LINK_UP: index.html
+
+   This makes the little /UP/ link ('=h=') point to the =index.html= in the
+   current directory.
+
+   The =index.org= in the root of the project has the /index file/ as section 2
+   (which I may reach pressing '=n=' then), and the same option set like this:
+
+   : #+LINK_UP: sitemap.html
+
+   For an =index.org= in a subdirectory:
+
+   : #+LINK_UP: ../index.html
+
+   The =LINK_HOME= always points to the same file:
+
+   : #+LINK_HOME: http://localhost/~user/index.html
+
+   Please consider replacing the last one with a relative path (which will be
+   different for every level of subdirectories).
+
+   No matter where we are, we may always press =H n= and we face the sitemap.
+   No matter where we are, we may always press =h= to move up the tree.
+
+* 特殊符号
+
+  This is a list of LaTeX symbols understood by Org-mode. You may use most of
+  those LaTeX symbols to get the desired results (shown in the first column)
+  when exporting to HTML. Note though, that not all symbols are translated to
+  HTML. They are listed anyway, since they may be used for LaTeX export
+  nonetheless. Some characters in the first column are invisible (spaces). To
+  see them, mark the part of the table using the mouse.
+
+  You may produce special HTML characters for verbatim =#+BEGIN\_HTML= sections
+  using http://www-atm.physics.ox.ac.uk/user/iwi/charmap.html (download link on
+  the bottom of that page).
+
+
+  | Symbol      | LaTeX                    |
+  |-------------+--------------------------|
+  | \nbsp       | ~\nbsp~                  |
+  | \iexcl      | ~\iexcl~                 |
+  | \cent       | ~\cent~                  |
+  | \pound      | ~\pound~                 |
+  | \curren     | ~\curren~                |
+  | \yen        | ~\yen~                   |
+  | \brvbar     | ~\brvbar~                |
+  | \vert       | ~\vert~                  |
+  | \sect       | ~\sect~                  |
+  | \uml        | ~\uml~                   |
+  | \copy       | ~\copy~                  |
+  | \ordf       | ~\ordf~                  |
+  | \laquo      | ~\laquo~                 |
+  | \not        | ~\not~                   |
+  | \shy        | ~\shy~                   |
+  | \reg        | ~\reg~                   |
+  | \macr       | ~\macr~                  |
+  | \deg        | ~\deg~                   |
+  | \plusmn     | ~\plusmn~                |
+  | \sup1       | ~\sup1~                  |
+  | \sup2       | ~\sup2~                  |
+  | \sup3       | ~\sup3~                  |
+  | \acute      | ~\acute~                 |
+  | \micro      | ~\micro~                 |
+  | \para       | ~\para~                  |
+  | \middot     | ~\middot~                |
+  | \odot       | ~\odot~                  |
+  | \star       | ~\star~                  |
+  | \cedil      | ~\cedil~                 |
+  | \ordm       | ~\ordm~                  |
+  | \raquo      | ~\raquo~                 |
+  | \frac14     | ~\frac14~                |
+  | \frac12     | ~\frac12~                |
+  | \frac34     | ~\frac34~                |
+  | \iquest     | ~\iquest~                |
+  | \Agrave     | ~\Agrave~                |
+  | \Aacute     | ~\Aacute~                |
+  | \Acirc      | ~\Acirc~                 |
+  | \Atilde     | ~\Atilde~                |
+  | \Auml       | ~\Auml~                  |
+  | \Aring      | ~\Aring~ ~\AA~           |
+  | \AElig      | ~\AElig~                 |
+  | \Ccedil     | ~\Ccedil~                |
+  | \Egrave     | ~\Egrave~                |
+  | \Eacute     | ~\Eacute~                |
+  | \Ecirc      | ~\Ecirc~                 |
+  | \Euml       | ~\Euml~                  |
+  | \Igrave     | ~\Igrave~                |
+  | \Iacute     | ~\Iacute~                |
+  | \Icirc      | ~\Icirc~                 |
+  | \Iuml       | ~\Iuml~                  |
+  | \ETH        | ~\ETH~                   |
+  | \Ntilde     | ~\Ntilde~                |
+  | \Ograve     | ~\Ograve~                |
+  | \Oacute     | ~\Oacute~                |
+  | \Ocirc      | ~\Ocirc~                 |
+  | \Otilde     | ~\Otilde~                |
+  | \Ouml       | ~\Ouml~                  |
+  | \times      | ~\times~                 |
+  | \Oslash     | ~\Oslash~                |
+  | \Ugrave     | ~\Ugrave~                |
+  | \Uacute     | ~\Uacute~                |
+  | \Ucirc      | ~\Ucirc~                 |
+  | \Uuml       | ~\Uuml~                  |
+  | \Yacute     | ~\Yacute~                |
+  | \THORN      | ~\THORN~                 |
+  | \szlig      | ~\szlig~                 |
+  | \agrave     | ~\agrave~                |
+  | \aacute     | ~\aacute~                |
+  | \acirc      | ~\acirc~                 |
+  | \atilde     | ~\atilde~                |
+  | \auml       | ~\auml~                  |
+  | \aring      | ~\aring~                 |
+  | \aelig      | ~\aelig~                 |
+  | \ccedil     | ~\ccedil~                |
+  | \egrave     | ~\egrave~                |
+  | \eacute     | ~\eacute~                |
+  | \ecirc      | ~\ecirc~                 |
+  | \euml       | ~\euml~                  |
+  | \igrave     | ~\igrave~                |
+  | \iacute     | ~\iacute~                |
+  | \icirc      | ~\icirc~                 |
+  | \iuml       | ~\iuml~                  |
+  | \eth        | ~\eth~                   |
+  | \ntilde     | ~\ntilde~                |
+  | \ograve     | ~\ograve~                |
+  | \oacute     | ~\oacute~                |
+  | \ocirc      | ~\ocirc~                 |
+  | \otilde     | ~\otilde~                |
+  | \ouml       | ~\ouml~                  |
+  | \oslash     | ~\oslash~                |
+  | \ugrave     | ~\ugrave~                |
+  | \uacute     | ~\uacute~                |
+  | \ucirc      | ~\ucirc~                 |
+  | \uuml       | ~\uuml~                  |
+  | \yacute     | ~\yacute~                |
+  | \thorn      | ~\thorn~                 |
+  | \yuml       | ~\yuml~                  |
+  | \fnof       | ~\fnof~                  |
+  | \Alpha      | ~\Alpha~                 |
+  | \Beta       | ~\Beta~                  |
+  | \Gamma      | ~\Gamma~                 |
+  | \Delta      | ~\Delta~                 |
+  | \Epsilon    | ~\Epsilon~               |
+  | \Zeta       | ~\Zeta~                  |
+  | \Eta        | ~\Eta~                   |
+  | \Theta      | ~\Theta~                 |
+  | \Iota       | ~\Iota~                  |
+  | \Kappa      | ~\Kappa~                 |
+  | \Lambda     | ~\Lambda~                |
+  | \Mu         | ~\Mu~                    |
+  | \Nu         | ~\Nu~                    |
+  | \Xi         | ~\Xi~                    |
+  | \Omicron    | ~\Omicron~               |
+  | \Pi         | ~\Pi~                    |
+  | \Rho        | ~\Rho~                   |
+  | \Sigma      | ~\Sigma~                 |
+  | \Tau        | ~\Tau~                   |
+  | \Upsilon    | ~\Upsilon~               |
+  | \Phi        | ~\Phi~                   |
+  | \Chi        | ~\Chi~                   |
+  | \Psi        | ~\Psi~                   |
+  | \Omega      | ~\Omega~                 |
+  | \alpha      | ~\alpha~                 |
+  | \beta       | ~\beta~                  |
+  | \gamma      | ~\gamma~                 |
+  | \delta      | ~\delta~                 |
+  | \epsilon    | ~\epsilon~               |
+  | \varepsilon | ~\varepsilon~            |
+  | \zeta       | ~\zeta~                  |
+  | \eta        | ~\eta~                   |
+  | \theta      | ~\theta~                 |
+  | \iota       | ~\iota~                  |
+  | \kappa      | ~\kappa~                 |
+  | \lambda     | ~\lambda~                |
+  | \mu         | ~\mu~                    |
+  | \nu         | ~\nu~                    |
+  | \xi         | ~\xi~                    |
+  | \omicron    | ~\omicron~               |
+  | \pi         | ~\pi~                    |
+  | \rho        | ~\rho~                   |
+  | \sigmaf     | ~\sigmaf~  ~\varsigma~   |
+  | \sigma      | ~\sigma~                 |
+  | \tau        | ~\tau~                   |
+  | \upsilon    | ~\upsilon~               |
+  | \phi        | ~\phi~                   |
+  | \chi        | ~\chi~                   |
+  | \psi        | ~\psi~                   |
+  | \omega      | ~\omega~                 |
+  | \thetasym   | ~\thetasym~  ~\vartheta~ |
+  | \upsih      | ~\upsih~                 |
+  | \piv        | ~\piv~                   |
+  | \bull       | ~\bull~  ~\bullet~       |
+  | \hellip     | ~\hellip~  ~\dots~       |
+  | \prime      | ~\prime~                 |
+  | \Prime      | ~\Prime~                 |
+  | \oline      | ~\oline~                 |
+  | \frasl      | ~\frasl~                 |
+  | \weierp     | ~\weierp~                |
+  | \image      | ~\image~                 |
+  | \real       | ~\real~                  |
+  | \trade      | ~\trade~                 |
+  | \alefsym    | ~\alefsym~               |
+  | \larr       | ~\larr~                  |
+  | \uarr       | ~\uarr~                  |
+  | \rarr       | ~\rarr~                  |
+  | \darr       | ~\darr~                  |
+  | \harr       | ~\harr~                  |
+  | \crarr      | ~\crarr~                 |
+  | \lArr       | ~\lArr~                  |
+  | \uArr       | ~\uArr~                  |
+  | \rArr       | ~\rArr~                  |
+  | \dArr       | ~\dArr~                  |
+  | \hArr       | ~\hArr~                  |
+  | \forall     | ~\forall~                |
+  | \part       | ~\part~                  |
+  | \exist      | ~\exist~                 |
+  | \empty      | ~\empty~                 |
+  | \nabla      | ~\nabla~                 |
+  | \isin       | ~\isin~                  |
+  | \notin      | ~\notin~                 |
+  | \ni         | ~\ni~                    |
+  | \prod       | ~\prod~                  |
+  | \sum        | ~\sum~                   |
+  | \minus      | ~\minus~                 |
+  | \lowast     | ~\lowast~                |
+  | \radic      | ~\radic~                 |
+  | \prop       | ~\prop~                  |
+  | \infin      | ~\infin~                 |
+  | \ang        | ~\ang~                   |
+  | \cap        | ~\cap~                   |
+  | \cup        | ~\cup~                   |
+  | \int        | ~\int~                   |
+  | \there4     | ~\there4~                |
+  | \sim        | ~\sim~                   |
+  | \cong       | ~\cong~                  |
+  | \asymp      | ~\asymp~                 |
+  | \ne         | ~\ne~                    |
+  | \equiv      | ~\equiv~                 |
+  | \le         | ~\le~                    |
+  | \ge         | ~\ge~                    |
+  | \sub        | ~\sub~                   |
+  | \sup        | ~\sup~                   |
+  | \nsub       | ~\nsub~                  |
+  | \sube       | ~\sube~                  |
+  | \supe       | ~\supe~                  |
+  | \oplus      | ~\oplus~                 |
+  | \otimes     | ~\otimes~                |
+  | \perp       | ~\perp~                  |
+  | \sdot       | ~\sdot~                  |
+  | \lceil      | ~\lceil~                 |
+  | \rceil      | ~\rceil~                 |
+  | \lfloor     | ~\lfloor~                |
+  | \rfloor     | ~\rfloor~                |
+  | \lang       | ~\lang~                  |
+  | \rang       | ~\rang~                  |
+  | \loz        | ~\loz~                   |
+  | \spades     | ~\spades~                |
+  | \clubs      | ~\clubs~                 |
+  | \hearts     | ~\hearts~                |
+  | \diams      | ~\diams~                 |
+  | \smile      | ~\smile~                 |
+  | \quot       | ~\quot~                  |
+  | \amp        | ~\amp~                   |
+  | \lt         | ~\lt~                    |
+  | \gt         | ~\gt~                    |
+  | \OElig      | ~\OElig~                 |
+  | \oelig      | ~\oelig~                 |
+  | \Scaron     | ~\Scaron~                |
+  | \scaron     | ~\scaron~                |
+  | \Yuml       | ~\Yuml~                  |
+  | \circ       | ~\circ~                  |
+  | \tilde      | ~\tilde~                 |
+  | \ensp       | ~\ensp~                  |
+  | \emsp       | ~\emsp~                  |
+  | \thinsp     | ~\thinsp~                |
+  | \zwnj       | ~\zwnj~                  |
+  | \zwj        | ~\zwj~                   |
+  | \lrm        | ~\lrm~                   |
+  | \rlm        | ~\rlm~                   |
+  | \ndash      | ~\ndash~                 |
+  | \mdash      | ~\mdash~                 |
+  | \lsquo      | ~\lsquo~                 |
+  | \rsquo      | ~\rsquo~                 |
+  | \sbquo      | ~\sbquo~                 |
+  | \ldquo      | ~\ldquo~                 |
+  | \rdquo      | ~\rdquo~                 |
+  | \bdquo      | ~\bdquo~                 |
+  | \dagger     | ~\dagger~                |
+  | \Dagger     | ~\Dagger~                |
+  | \permil     | ~\permil~                |
+  | \lsaquo     | ~\lsaquo~                |
+  | \rsaquo     | ~\rsaquo~                |
+  | \euro       | ~\euro~                  |
+  | \arccos     | ~\arccos~                |
+  | \arcsin     | ~\arcsin~                |
+  | \arctan     | ~\arctan~                |
+  | \arg        | ~\arg~                   |
+  | \cos        | ~\cos~                   |
+  | \cosh       | ~\cosh~                  |
+  | \cot        | ~\cot~                   |
+  | \coth       | ~\coth~                  |
+  | \csc        | ~\csc~                   |
+  | \deg        | ~\deg~                   |
+  | \det        | ~\det~                   |
+  | \dim        | ~\dim~                   |
+  | \exp        | ~\exp~                   |
+  | \gcd        | ~\gcd~                   |
+  | \hom        | ~\hom~                   |
+  | \inf        | ~\inf~                   |
+  | \ker        | ~\ker~                   |
+  | \lg         | ~\lg~                    |
+  | \lim        | ~\lim~                   |
+  | \liminf     | ~\liminf~                |
+  | \limsup     | ~\limsup~                |
+  | \ln         | ~\ln~                    |
+  | \log        | ~\log~                   |
+  | \max        | ~\max~                   |
+  | \min        | ~\min~                   |
+  | \Pr         | ~\Pr~                    |
+  | \sec        | ~\sec~                   |
+  | \sin        | ~\sin~                   |
+  | \sinh       | ~\sinh~                  |
+  | \tan        | ~\tan~                   |
+  | \tanh       | ~\tanh~                  |
+
+
+* Further reading
+
+   For more information you might want to read the great [[http://orgmode.org/manual/][Org-mode manual]]
+   ([[http://orgmode.org/#sec-4][download]]). One of the nicest mailing lists on this planet, BTW, is
+   [[http://lists.gnu.org/archive/html/emacs-orgmode/][emacs-orgmode (archive)]] where you might as well find answers to your
+   questions.
+
+
+   Have fun!
+
+
+
+
+
+
+
+
+
+
+

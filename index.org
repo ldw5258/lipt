@@ -1,0 +1,13 @@
+# -*- org -*-
+
+# Time-stamp: <2011-09-09 00:43:06 Friday by ldw>
+
+#+OPTIONS: ^:nil author:nil timestamp:nil creator:nil H:2
+
+#+STARTUP: indent
+
+
+#+TITLE: Life in Plain Text
+
+
+* Emacs
