@@ -1,0 +1,18 @@
+# -*- org -*-
+
+# Time-stamp: <2011-08-05 21:37:28 Friday by ldw>
+
+#+OPTIONS: ^:nil author:nil timestamp:nil creator:nil H:2
+
+#+STARTUP: indent
+
+
+* 金三角
+  主要供应亚洲
+
+
+* 金新月
+阿富汗、巴勒斯坦和伊朗交界
+主要供应欧洲
+* 南美
+  南美主要供应美加

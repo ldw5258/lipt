@@ -764,6 +764,39 @@
          :publishing-directory "~/www/human-word/people/jingdiwangtian/"
          :publishing-function org-publish-attachment)
 
+
+        ("jin-inherit"
+         :base-directory "~/www/"
+         :recursive t
+         :base-extension "css\\|js"
+         :publishing-directory "~/www/lipt/human-word/people/jinhong/"
+         :publishing-function org-publish-attachment
+         )
+
+        ("jin-notes"
+         :base-directory "~/lipt/human-word/people/jinhong/"
+         :auto-index t
+         :index-filename "sitemap.org"
+         :index-title "Sitemap"
+         :auto-sitemap t                ; Generate sitemap.org automagically...
+         :sitemap-filename "sitemap.org"  ; ... call it sitemap.org (it's the default)...
+         :sitemap-title "Sitemap"         ; ... with title 'Sitemap'.
+
+         :recursive t
+         :base-extension "org"
+         :publishing-directory "~/www/human-word/people/jinhong/"
+         :publishing-function org-publish-org-to-html
+         :headline-levels 3
+         :auto-preamble t
+         )
+        ("jin-static"
+         :base-directory "~/lipt/human-word/people/jinhong/"
+         :recursive t
+         :base-extension "css\\|js\\|png\\|jpg\\|jpeg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"
+         :publishing-directory "~/www/human-word/people/jinhong/"
+         :publishing-function org-publish-attachment)
+
+
         ;; ("B" :components ("B-inherit" "B-notes" "B-static"))
 
         ;; ("C-inherit"
@@ -864,6 +897,7 @@
         ;; ... all the rest ... ;;
 
         ("jing" :components ("inherit-org-info-js" "jing-inherit" "jing-notes" "jing-static"))
+        ("jin" :components ("inherit-org-info-js" "jin-inherit" "jin-notes" "jin-static"))
         ;; ("C" :components ("inherit-org-info-js" "C-inherit" "C-notes" "C-static"))
         ;; ("D" :components ("inherit-org-info-js" "D-inherit" "D-notes" "D-static"))
         ;; ("E" :components ("inherit-org-info-js" "E-inherit" "E-notes" "E-static"))
