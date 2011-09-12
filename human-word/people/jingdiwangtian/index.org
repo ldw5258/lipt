@@ -1,6 +1,6 @@
 # -*- org -*-
 
-# Time-stamp: <2011-09-10 00:40:18 Saturday by ldw>
+# Time-stamp: <2011-09-12 21:02:46 Monday by ldw>
 
 #+OPTIONS: ^:nil author:nil timestamp:nil creator:nil H:3
 
@@ -11,3 +11,5 @@
 #+AUTHOR: 井底望天
 
 #+SETUPFILE:~/dea/templates/level-100.org
+
+#+include "2011.org" 

@@ -1,0 +1,26 @@
+# -*- org -*-
+
+# Time-stamp: <2011-09-12 20:47:23 Monday by ldw>
+
+#+OPTIONS: ^:nil author:nil timestamp:nil creator:nil H:3
+
+#+STARTUP: indent
+
+#+TITLE: 曲
+
+#+AUTHOR:
+
+#+SETUPFILE:~/dea/templates/level-0.org
+
+
+** 简单曲谱
+
+   
+*** 欢乐颂
+
+3345】5432】1123】322-】
+3345】5432】1123】211-】
+2231】23431】23432】125-】
+3345】5432】1123】211-】
+
+

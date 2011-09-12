@@ -737,7 +737,7 @@
          :base-directory "~/www/"
          :recursive t
          :base-extension "css\\|js"
-         :publishing-directory "~/www/lipt/human-word/people/jingdiwangtian/"
+         :publishing-directory "~/www/human-word/people/jingdiwangtian/"
          :publishing-function org-publish-attachment
          )
 
@@ -769,12 +769,12 @@
          :base-directory "~/www/"
          :recursive t
          :base-extension "css\\|js"
-         :publishing-directory "~/www/lipt/human-word/people/jinhong/"
+         :publishing-directory "~/www/human-word/people/jinhong/"
          :publishing-function org-publish-attachment
          )
 
         ("jin-notes"
-         :base-directory "~/lipt/human-word/people/jinhong/"
+         :base-directory "~/human-word/people/jinhong/"
          :auto-index t
          :index-filename "sitemap.org"
          :index-title "Sitemap"
@@ -796,6 +796,37 @@
          :publishing-directory "~/www/human-word/people/jinhong/"
          :publishing-function org-publish-attachment)
 
+        
+        ("tech-inherit"
+         :base-directory "~/www/"
+         :recursive t
+         :base-extension "css\\|js"
+         :publishing-directory "~/www/technology/"
+         :publishing-function org-publish-attachment
+         )
+
+        ("tech-notes"
+         :base-directory "~/lipt/technology/"
+         :auto-index t
+         :index-filename "sitemap.org"
+         :index-title "Sitemap"
+         :auto-sitemap t                ; Generate sitemap.org automagically...
+         :sitemap-filename "sitemap.org"  ; ... call it sitemap.org (it's the default)...
+         :sitemap-title "Sitemap"         ; ... with title 'Sitemap'.
+
+         :recursive t
+         :base-extension "org"
+         :publishing-directory "~/www/technology/"
+         :publishing-function org-publish-org-to-html
+         :headline-levels 3
+         :auto-preamble t
+         )
+        ("tech-static"
+         :base-directory "~/lipt/technology/"
+         :recursive t
+         :base-extension "css\\|js\\|png\\|jpg\\|jpeg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"
+         :publishing-directory "~/www/technology/"
+         :publishing-function org-publish-attachment)
 
         ;; ("B" :components ("B-inherit" "B-notes" "B-static"))
 
@@ -898,6 +929,8 @@
 
         ("jing" :components ("inherit-org-info-js" "jing-inherit" "jing-notes" "jing-static"))
         ("jin" :components ("inherit-org-info-js" "jin-inherit" "jin-notes" "jin-static"))
+        ("tech" :components ("inherit-org-info-js" "tech-inherit" "tech-notes" "tech-static"))
+
         ;; ("C" :components ("inherit-org-info-js" "C-inherit" "C-notes" "C-static"))
         ;; ("D" :components ("inherit-org-info-js" "D-inherit" "D-notes" "D-static"))
         ;; ("E" :components ("inherit-org-info-js" "E-inherit" "E-notes" "E-static"))
@@ -962,9 +995,9 @@
 ;;                  ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 ;; (setq org-latex-to-pdf-process
 ;;       '("texi2dvi --pdf --clean --verbose --batch %f"))
-;; ;; Special Characters
-;; (setq org-entities-user
-;;       '(("space" "\\ " nil " " " " " " " ")))
+;; Special Characters
+(setq org-entities-user
+      '(("space" "\\ " nil " " " " " " " ")))
 ;; ;; Block-level Markup
 ;; ;; Inline Markup
 ;; (org-add-link-type
