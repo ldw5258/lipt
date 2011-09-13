@@ -732,6 +732,25 @@
          :publishing-function org-publish-attachment
          )
         ("lipt" :components ("lipt-notes" "lipt-static"))
+
+        ("diary-notes"
+         :base-directory "/usr/lib/diary/"
+         :base-extension "org"
+         :publishing-directory "/tmp/www/"
+         :recursive t
+         :publishing-function org-publish-org-to-html
+         :headline-levels 3             ; Just the default for this project.
+         :auto-preamble t
+         )
+        ("diary-static"
+         :base-directory "/usr/lib/diary/"
+         :base-extension "css\\|js\\|png\\|jpg\\|jpeg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"
+         :publishing-directory "/tmp/www/"
+         :recursive t
+         :publishing-function org-publish-attachment
+         )
+        ("diary" :components ("diary-notes" "diary-static"))
+
         
         ("jing-inherit"
          :base-directory "~/www/"
