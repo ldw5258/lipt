@@ -1,4 +1,4 @@
 *~
 *.html
 .git*
-.#sitemap.org
+*.#*.org
