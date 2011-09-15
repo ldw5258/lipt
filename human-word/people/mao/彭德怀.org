@@ -1,0 +1,11 @@
+# -*- org -*-
+
+# Time-stamp: <2011-09-15 09:45:55 Thursday by ldw>
+
+#+OPTIONS: ^:nil author:nil timestamp:nil creator:nil H:2
+
+#+STARTUP: indent
+
+
+#+TITLE: 彭德怀
+

@@ -268,6 +268,26 @@
   (insert str1)
   )
 
+(defun i-babel-quote-inline (beg end str1 str2)
+  (goto-char end)
+;;  (forward-line 1)
+  (insert str2)
+;;  (newline)
+  (goto-char beg)
+;;  (forward-line -1)
+;;  (newline)
+  (insert str1)
+  )
+
+;;; 标记
+(defun icu (St Ed)
+  "将选中的内容加粗"
+  (interactive "r")
+  (let ((beg St) (end Ed))
+    (message "%s %s" beg end)
+    (i-babel-quote-inline beg end " *" "* " ))
+  )
+
 ;;; 设置字体显示
 ;; 楷体
 (defun ikai (St Ed)

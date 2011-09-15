@@ -1,0 +1,2 @@
+#!/bin/bash
+rm *.out *.log *.aux *.toc *.bbl *.blg *~
