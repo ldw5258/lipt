@@ -1,6 +1,6 @@
 # -*- org -*-
 
-# Time-stamp: <2011-09-15 09:57:54 Thursday by ldw>
+# Time-stamp: <2011-09-15 20:51:24 Thursday by ldw>
 
 #+OPTIONS: ^:nil author:nil timestamp:nil creator:nil
 
@@ -14,37 +14,26 @@
 
 ** <2011-07-26 Tue>
 
-* TODO 哲学[0/1]
+* TODO 哲学[0/3]
 树苗
+** TODO [#A] 毛泽东
 ** TODO 西方哲学
 *** TODO A0119西方哲学史
 ** TODO 中国哲学
 
-* TODO 历史地理学[0/2]
-树根
-
-** TODO 中国通史
-** TODO 世界通史
-
-* TODO 数论[0%]
+* TODO [#A] 硕士研究生课程[0%]
+** TODO 高级操作系统
+** TODO 计算机算法基础
+** TODO 计算机应用数学-组合数学
+** TODO 随机过程论
+** TODO 应用数学方法
+* TODO [#A] 数学[0%]
 
 ** TODO 二元一次方程
 
 *** 一元不定方程的整数解
 
-* TODO 英语[/]
-* TODO emacs
-
-** DONE w3m 设置
-   CLOSED: [2011-07-25 Mon 18:13]
-
-
-** beamer - PPT制作
-* TODO 中医与易经[0/1]
-
-***** UNDERGOING 通读《周易》
-
-* TODO 算法[0/5]
+* TODO [#A] 算法[0/5]
 
 ** TODO 优化算法
 
@@ -107,6 +96,25 @@
 
 ** TODO Kalman滤波
   
+* TODO [#A] 英语[0/1]
+** UNDERGOING 刘一男视频
+* TODO [#A] 历史地理学[0/2]
+树根
+
+** TODO 中国通史
+** TODO 世界通史
+
+* TODO [#A] 中医与易经[0/1]
+
+***** UNDERGOING [#A] 通读《周易》
+
+* TODO emacs
+** TODO [#A] GDT
+** DONE w3m 设置
+   CLOSED: [2011-07-25 Mon 18:13]
+
+
+** beamer - PPT制作
 * TODO 孙子兵法、三十六计[/]
 
 * TODO 政治经济
@@ -169,9 +177,3 @@ CLOSED: [2011-08-02 Tue 17:29]
 *** TODO 优化的意义和发展
 *** TODO 心态
 *** TODO 毛泽东评论[金鸿、占豪、会同天下、刀口、migel、龙凯锋、]
-* TODO 硕士研究生课程[0%]
-** TODO 高级操作系统
-** TODO 计算机算法基础
-** TODO 计算机应用数学-组合数学
-** TODO 随机过程论
-** TODO 应用数学方法
