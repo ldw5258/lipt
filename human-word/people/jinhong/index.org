@@ -1,0 +1,21 @@
+# -*- org -*-
+
+# Time-stamp: <2011-08-05 18:17:04 Friday by ldw>
+
+#+OPTIONS: ^:nil author:nil timestamp:nil creator:nil H:2
+
+#+STARTUP: overview
+
+#+STYLE: <link rel="stylesheet" type="text/css" href="css/org.css" />
+
+#+title: 【金鸿作品】
+
+#+LaTeX_CLASS: article
+#+AUTHOR: 金鸿
+#+LaTeX_CLASS_OPTIONS: [a4paper,11pt]
+
+[[file:04年以来的大国斗争回顾.org][04年以来的大国斗争回顾]]
+
+* COMMENT 全文显示
+ #+INCLUDE: "04年以来的大国斗争回顾.org"
+  

@@ -1,0 +1,16 @@
+# -*- org -*-
+
+# Time-stamp: <2011-09-10 00:39:07 Saturday by ldw>
+
+#+OPTIONS: ^:nil author:nil timestamp:nil creator:nil H:2
+
+#+STARTUP: indent
+
+#+TITLE: 人类世界
+
+#+SETUPFILE: ~/dea/templates/level-10.org
+
+
+** 人物
+
+[[file:./people/jingdiwangtian][井底望天]]

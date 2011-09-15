@@ -1,0 +1,10 @@
+# -*- org -*-
+
+# Time-stamp: <2011-09-09 00:59:17 Friday by ldw>
+
+#+OPTIONS: ^:nil author:nil timestamp:nil creator:nil H:2
+
+#+STARTUP: indent
+
+
+#+TITLE: 让历史告诉未来

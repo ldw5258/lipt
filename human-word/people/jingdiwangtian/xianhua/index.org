@@ -1,0 +1,15 @@
+# -*- org -*-
+
+# Time-stamp: <2011-09-10 00:43:32 Saturday by ldw>
+
+#+OPTIONS: ^:nil author:nil timestamp:nil creator:nil H:3
+
+#+STARTUP: indent
+
+#+TITLE: 闲话
+
+#+AUTHOR:井底望天
+
+#+SETUPFILE:~/dea/templates/level-0.org
+
+

@@ -1,0 +1,10 @@
+# -*- org -*-
+
+# Time-stamp: <2011-09-13 17:04:46 Tuesday by ldw>
+
+#+OPTIONS: ^:nil author:nil timestamp:nil creator:nil H:2
+
+#+STARTUP: indent
+
+
+#+TITLE: 
