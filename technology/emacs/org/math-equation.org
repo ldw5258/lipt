@@ -1,0 +1,75 @@
+# -*- org -*-
+
+# Time-stamp: <2011-09-16 01:02:24 Friday by ldw>
+
+#+OPTIONS: ^:nil author:nil timestamp:nil creator:nil H:3
+
+#+STARTUP: indent
+
+#+TITLE:
+
+#+AUTHOR:
+
+#+SETUPFILE:~/dea/templates/level-0.org
+
+
+
+** 公式中的文本，amsmath宏包
+
+
+在公式中插入文本可以使用命令：
+
+\text{文本}
+
+这一命令比LaTeX原有命令\mbox功能更强一些，它会按照所处位置自动改变字体大小。
+
+举例如下：
+
+#+begin_src LaTeX
+This is $_{\text{subscript}}$
+
+This is $_{\mbox{subscript}}$
+
+This is $_{\mbox{\scriptsize subscript}}$
+#+end_src
+
+
+效果图：
+
+This is $_{\text{subscript}}$
+
+This is $_{\mbox{subscript}}$
+
+This is $_{\mbox{\scriptsize subscript}}$
+
+
+
+
+多行公式之间插入文本可以使用命令：
+
+: \intertext{文本}
+
+这一命令下方和上方的公式仍处于同一个数学环境之中，因此可以保持上下的对齐关系不变。
+
+#+begin_src LaTeX
+\begin{align*}
+  (x + i y)(x - i y) &=x^2 + i xy - i xy -i^2 y^2\\
+                         &=x^2+y^2\\
+  \intertext{利用~$i^2=-1$,还可得到}
+  (x+i y)^2 &=x^2 + 2i xy -y^2\\
+  (x-i y)^2 &=x^2 - 2i xy -y^2
+\end{align*}
+#+end_src
+效果图：
+
+
+\begin{align*}
+  (x + i y)(x - i y) &=x^2 + i xy - i xy -i^2 y^2\\
+                         &=x^2+y^2\\
+  \intertext{利用~$i^2=-1$,还可得到}
+  (x+i y)^2 &=x^2 + 2i xy -y^2\\
+  (x-i y)^2 &=x^2 - 2i xy -y^2
+\end{align*}
+
+
+LaTeX技巧心得114：公式中的文本，amsmath宏包
