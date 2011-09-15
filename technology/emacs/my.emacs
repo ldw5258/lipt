@@ -268,8 +268,6 @@
   (insert str1)
   )
 
-<<<<<<< HEAD
-=======
 (defun i-babel-quote-inline (beg end str1 str2)
   (goto-char end)
 ;;  (forward-line 1)
@@ -290,7 +288,6 @@
     (i-babel-quote-inline beg end " *" "* " ))
   )
 
->>>>>>> 9e749ba9b639c19e068348eebd6c29702b475e03
 ;;; 设置字体显示
 ;; 楷体
 (defun ikai (St Ed)
