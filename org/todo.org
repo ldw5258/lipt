@@ -1,0 +1,177 @@
+# -*- org -*-
+
+# Time-stamp: <2011-09-15 09:57:54 Thursday by ldw>
+
+#+OPTIONS: ^:nil author:nil timestamp:nil creator:nil
+
+#+STARTUP: indent overview
+
+#+STYLE: <link rel="stylesheet" type="text/css" href="css/org.css" />
+
+#+title:TODO List
+
+* TODO update[/]
+
+** <2011-07-26 Tue>
+
+* TODO 哲学[0/1]
+树苗
+** TODO 西方哲学
+*** TODO A0119西方哲学史
+** TODO 中国哲学
+
+* TODO 历史地理学[0/2]
+树根
+
+** TODO 中国通史
+** TODO 世界通史
+
+* TODO 数论[0%]
+
+** TODO 二元一次方程
+
+*** 一元不定方程的整数解
+
+* TODO 英语[/]
+* TODO emacs
+
+** DONE w3m 设置
+   CLOSED: [2011-07-25 Mon 18:13]
+
+
+** beamer - PPT制作
+* TODO 中医与易经[0/1]
+
+***** UNDERGOING 通读《周易》
+
+* TODO 算法[0/5]
+
+** TODO 优化算法
+
+*** TODO 动态规划
+
+**** TODO 最长公共子序列
+
+**** TODO 粘性解
+
+**** TODO 维数之咒
+
+**** TODO 自动换行
+
+**** TODO 部分可观察马可夫决策过程
+
+*** TODO 组合优化
+
+**** TODO A* 算法
+
+**** TODO 单纯形算法
+
+**** TODO 线性规划的松弛
+
+*** 遗传算法
+
+*** 差异进化算法
+
+*** 禁忌搜索
+
+*** 粒子群优化
+
+*** 粒子群演算法
+
+*** 模拟退火
+
+*** 群体智能
+
+*** 牛顿法
+
+
+*** 共轭梯度法
+
+**** 共轭梯度法的推导
+
+*** 梯度下降法
+
+*** 社会认知优化
+
+*** 序列最小优化算法
+
+*** 极小化极大算法
+
+*** 协同优化算法
+
+*** 次梯度法
+
+*** 局部搜索
+
+*** 矩陣鏈乘積
+
+** TODO Kalman滤波
+  
+* TODO 孙子兵法、三十六计[/]
+
+* TODO 政治经济
+** TODO 西方经济
+
+*** TODO 《国富论》
+- Note taken on [2011-09-05 Mon 17:26] \\
+  国富论，必看
+- Note taken on [2011-09-05 Mon 17:25] \\
+  C-c C-z
+  What is Org Note?
+*** TODO 《凯恩斯著作》
+*** TODO 《博弈论与经济行为》
+*** TODO 《资本积累与经济活动》
+*** TODO 《投资策略》
+*** TODO 《停滞膨胀》
+*** TODO 《增长的极限》
+*** TODO 《国际生产与跨国企业》
+** TODO 《黄金游戏》
+* TODO 临时[2/11]
+** TODO [#A] 学习emacs orgmode的表格和特殊字符的输入。
+** <2011-07-24 Sun 08:54>
+*** DONE 添加中国地图和世界地图的背景
+    CLOSED: [2011-07-24 Sun 09:48]
+    - CLOSING NOTE [2011-07-24 Sun 09:49] \\
+      将世界地图和中国地图用gimp裁剪并绽放后作为桌面
+** TODO 整理金鸿评论的近期文章(Latex)
+** CANCELED 命令行音乐播放器xmm2
+CLOSED: [2011-08-20 Sat 08:45]
+** DONE Apache服务器设置
+CLOSED: [2011-08-02 Tue 17:29]
+** 歌曲
+*** 《伽蓝雨》
+** TODO 《军情观察室》
+*** <2011-07-31 Sun>
+航母：训练和实验
+蛟龙号：超过5千米，实验于东北太平洋
+运九
+    
+** TODO Apache+php+mysql
+** TODO grep与find学习
+
+*** info grep ; info find
+
+** TODO w3m 天气预报设置
+
+** TODO rhythmbox 能显示歌词吗?
+** 消耗时间
+
+*** TODO 电影
+**** TODO 《史密斯夫妇》
+**** TODO 《刀》，赵文卓，徐克
+*** 小说
+
+*** 博客
+
+** TODO <2011-08-20 Sat>[0/4]
+
+*** TODO 科学态度
+*** TODO 优化的意义和发展
+*** TODO 心态
+*** TODO 毛泽东评论[金鸿、占豪、会同天下、刀口、migel、龙凯锋、]
+* TODO 硕士研究生课程[0%]
+** TODO 高级操作系统
+** TODO 计算机算法基础
+** TODO 计算机应用数学-组合数学
+** TODO 随机过程论
+** TODO 应用数学方法

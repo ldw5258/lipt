@@ -1,0 +1,10 @@
+# -*- org -*-
+
+# Time-stamp: <2011-08-07 16:23:05 Sunday by ldw>
+
+#+OPTIONS: ^:nil author:nil timestamp:nil creator:nil H:2
+
+#+STARTUP: indent
+
+| 科索沃   | Kosovo |
+| 塞尔维亚 | Serbia |
