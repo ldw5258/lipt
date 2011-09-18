@@ -1,6 +1,6 @@
 # -*- org -*-
 
-# Time-stamp: <2011-09-10 22:37:51 Saturday by ldw>
+# Time-stamp: <2011-09-19 00:27:01 Monday by ldw>
 
 #+OPTIONS: ^:nil author:nil timestamp:nil creator:nil H:3
 
@@ -371,3 +371,6 @@ $ git config --global alias.lol 'log --pretty=oneline --graph'
 #+end_src
 至此，git基础篇结束。你已经可以使用git进行日常的代码管理维护，下一篇进阶篇将着重介绍分支，git配置，git原理以及github等内容。
 随机文章
+** github
+https://github.com/
+帮助文档：http://help.github.com/linux-set-up-git/
