@@ -1,6 +1,6 @@
 # -*- org -*-
 
-# Time-stamp: <2011-09-19 00:27:01 Monday by ldw>
+# Time-stamp: <2011-09-19 11:20:02 Monday by ldw>
 
 #+OPTIONS: ^:nil author:nil timestamp:nil creator:nil H:3
 
@@ -374,3 +374,40 @@ $ git config --global alias.lol 'log --pretty=oneline --graph'
 ** github
 https://github.com/
 帮助文档：http://help.github.com/linux-set-up-git/
+
+
+Global setup:
+
+[[http://help.github.com/set-up-git-redirect][ Set up git]]
+  git config --global user.name "智能仿真"
+  git config --global user.email ldw5258@126.com
+        
+
+Next steps:
+
+  mkdir ldw5258.github.com
+  cd ldw5258.github.com
+  git init
+  touch README
+  git add README
+  git commit -m 'first commit'
+  git remote add origin git@github.com:ldw5258/ldw5258.github.com.git
+  git push -u origin master
+      
+
+Existing Git Repo?
+
+  cd existing_git_repo
+  git remote add origin git@github.com:ldw5258/ldw5258.github.com.git
+  git push -u origin master
+      
+
+Importing a Subversion Repo?
+
+[[https://github.com/ldw5258/ldw5258.github.com/imports/new][Click here]]
+      
+
+When you're done:
+
+[[https://github.com/ldw5258/ldw5258.github.com][Continue]
+

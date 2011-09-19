@@ -1,8 +1,8 @@
 # -*- org -*-
 
-# Time-stamp: <2011-09-10 00:35:18 Saturday by ldw>
+# Time-stamp: <2011-09-19 15:32:56 Monday by ldw>
 
-#+OPTIONS: ^:nil author:nil timestamp:nil creator:nil H:2
+#+OPTIONS: ^:nil author:nil timestamp:nil creator:nil H:2 toc:nil
 
 #+STARTUP: indent
 
@@ -10,10 +10,41 @@
 
 #+SETUPFILE: ~/dea/templates/level-0.org
 
+#+begin_html
+---
+layout: default
+title: Life in Plain Text
+subtitle: 还没想好的二级标题
+
+links:
+  tourguide: http://www.wowinterface.com/downloads/fileinfo.php?id=7674
+  wowi: http://www.wowinterface.com/downloads/index.php?cid=37
+  github: http://github.com/ldw5258
+---
+#+end_html
 
 
-* Emacs
-[[file:technology/emacs/index.org][Emacs]]
-* 人类世界
-[[file:./human-word/index.org][人类社会]]
+#+HTML:<div class="sidebar">
 
+sidebar
+
+#+HTML:</div>
+
+正文内容1
+
+** 标题
+
+#+begin_html
+<div class="top_post">
+  {% if first_post.thumbnail %}
+    !(thumb){{ first_post.thumbnail }}({{ first_post.thumbnail_alt }})!
+  {% endif %} {{ first_post.content }}
+</div>
+#+end_html
+
+
+#+begin_html
+<noscript>
+It looks like you have javascript blocked.  I'm afraid my site requires it for the addon list to work.  If you don't trust my code... why the hell are you using my addons?  You're more than welcome to check out "my code":http://github.com/tekkub/tekkub.github.com/blob/master/js/main.js, it's just a bit of jQuery to ensure the addon list is always updated... I forget to regenerate the site every time I add a new addon.
+</noscript>
+#+end_html
