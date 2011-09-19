@@ -2,12 +2,20 @@
 
    + emacs
      + org
-       + [[file:emacs/org/tags-properties-columnview.org][]]
-       + [[file:emacs/org/tables-spreadsheet-plotting.org][]]
-       + [[file:emacs/org/remember.org][]]
-       + [[file:emacs/org/dates-times.org][]]
-       + [[file:emacs/org/capture.org][]]
-       + [[file:emacs/org/agenda-search.org][]]
+       + [[file:emacs/org/math-equation.org][]]
+       + [[file:emacs/org/agenda-search.org][agenda-search]]
+       + [[file:emacs/org/blog.org][blog]]
+       + [[file:emacs/org/capture.org][capture]]
+       + [[file:emacs/org/dates-times.org][dates-times]]
        + [[file:emacs/org/exporting-publishing.org][exporting-publishing.org]]
+       + [[file:emacs/org/remember.org][remember]]
+       + [[file:emacs/org/summary.org][summary]]
+       + [[file:emacs/org/tables-spreadsheet-plotting.org][tables-spreadsheet-plotting]]
+       + [[file:emacs/org/tags-properties-columnview.org][tags-properties-columnview]]
      + [[file:emacs/index.org][]]
+   + github
+     + [[file:github/GitHub的研发管理之道.org][GitHub的研发管理之道]]
+   + linux
+     + [[file:linux/openoffice.org][]]
    + [[file:git.org][Git笔记]]
+   + [[file:index.org][技术的纠结]]

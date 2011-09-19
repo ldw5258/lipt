@@ -1,0 +1,41 @@
+# -*- org -*-
+
+# Time-stamp: <2011-09-19 17:02:16 Monday by ldw>
+
+#+OPTIONS: ^:nil author:nil timestamp:nil creator:nil H:2 toc:nil
+
+#+STARTUP: indent
+
+#+TITLE: Life in Plain Text
+
+#+SETUPFILE: ~/dea/templates/level-0.org
+#+STYLE: <link rel="stylesheet" type="text/css" href="css/worg.css" />
+
+#+begin_html
+---
+layout: default
+title: 智能仿真
+subtitle: Life in Plain Text
+
+links:
+  tourguide: http://www.wowinterface.com/downloads/fileinfo.php?id=7674
+  wowi: http://www.wowinterface.com/downloads/index.php?cid=37
+  github: http://github.com/ldw5258
+---
+#+end_html
+
+
+#+HTML:<div class="sidebar">
++ [[file:nature/math/index.org][数理基础]]
++ [[file:history/index.org][历史]]
++ [[file:philosophy/index.org][哲学]]
++ [[file:law/index.org][法]]
++ [[file:people/index.org][人物]]
++ [[file:technology/index.org][技术]]
+#+HTML:</div>
+
+
+
+* 老军001:如何从书本读懂世界
+#+include "../people/laojun001/如何从书本读懂世界.org" 
+

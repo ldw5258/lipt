@@ -582,176 +582,96 @@
       '(
         ;; ... add all the components here (see below)...
 
-        ;; ("org-notes"
-        ;;  :base-directory "~/org/"
-        ;;  :base-extension "org"
-        ;;  :publishing-directory "~/public_html/"
-        ;;  :recursive t
-        ;;  :publishing-function org-publish-org-to-html
-        ;;  :headline-levels 3             ; Just the default for this project.
-        ;;  :auto-preamble t
-        ;;  )
-        ;; ("org-static"
-        ;;  :base-directory "~/org/"
-        ;;  :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"
-        ;;  :publishing-directory "~/public_html/"
-        ;;  :recursive t
-        ;;  :publishing-function org-publish-attachment
-        ;;  )
-        ;; ("org" :components ("org-notes" "org-static"))
-        
-        ;; ("B-inherit"
-        ;;  :base-directory "~/org/"
-        ;;  :recursive t
-        ;;  :base-extension "css\\|js"
-        ;;  :publishing-directory "~/public_html/B/"
-        ;;  :publishing-function org-publish-attachment
-        ;;  )
 
-        ;; ("B-notes"
-        ;;  :base-directory "~/B/"
-        ;;  :auto-index t
-        ;;  :index-filename "sitemap.org"
-        ;;  :index-title "Sitemap"
-        ;;  :auto-sitemap t                ; Generate sitemap.org automagically...
-        ;;  :sitemap-filename "sitemap.org"  ; ... call it sitemap.org (it's the default)...
-        ;;  :sitemap-title "Sitemap"         ; ... with title 'Sitemap'.
-
-        ;;  :recursive t
-        ;;  :base-extension "org"
-        ;;  :publishing-directory "~/public_html/B/"
-        ;;  :publishing-function org-publish-org-to-html
-        ;;  :headline-levels 3
-        ;;  :auto-preamble t
-        ;;  )
-        ;; ("B-static"
-        ;;  :base-directory "~/B/"
-        ;;  :recursive t
-        ;;  :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"
-        ;;  :publishing-directory "~/public_html/B/"
-        ;;  :publishing-function org-publish-attachment)
-
-        ;; ;; ("B" :components ("B-inherit" "B-notes" "B-static"))
-
-        ;; ("C-inherit"
-        ;;  :base-directory "~/org/"
-        ;;  :recursive t
-        ;;  :base-extension "css\\|js"
-        ;;  :publishing-directory "~/public_html/C/"
-        ;;  :publishing-function org-publish-attachment
-        ;;  )
-        ;; ("C-notes"
-        ;;  :base-directory "~/C/"
-        ;;  :auto-index t
-        ;;  :index-filename "sitemap.org"
-        ;;  :index-title "Sitemap"
-        ;;  :recursive t
-        ;;  :base-extension "org"
-        ;;  :publishing-directory "~/public_html/C/"
-        ;;  :publishing-function org-publish-org-to-html
-        ;;  :headline-levels 3
-        ;;  :auto-preamble t
-        ;;  )
-        ;; ("C-static"
-        ;;  :base-directory "~/B/"
-        ;;  :recursive t
-        ;;  :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"
-        ;;  :publishing-directory "~/public_html/B/"
-        ;;  :publishing-function org-publish-attachment)
-
-        ;; ;; ("C" :components ("C-inherit" "C-notes" "C-static"))
-
-        
-
-        ;; ("D-inherit"
-        ;;  :base-directory "~/org/"
-        ;;  :recursive t
-        ;;  :base-extension "css\\|js"
-        ;;  :publishing-directory "~/public_html/D/"
-        ;;  :publishing-function org-publish-attachment
-        ;;  )
-
-        ;; ("D-notes"
-        ;;  :base-directory "~/D/"
-        ;;  :auto-index t
-        ;;  :index-filename "sitemap.org"
-        ;;  :index-title "Sitemap"
-        ;;  :recursive t
-        ;;  :base-extension "org"
-        ;;  :publishing-directory "~/public_html/D/"
-        ;;  :publishing-function org-publish-org-to-html
-        ;;  :headline-levels 3
-        ;;  :auto-preamble t
-        ;;  )
-        ;; ("D-static"
-        ;;  :base-directory "~/D/"
-        ;;  :recursive t
-        ;;  :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"
-        ;;  :publishing-directory "~/public_html/D/"
-        ;;  :publishing-function org-publish-attachment)
-
-        ;; ;; ("D" :components ("D-inherit" "D-notes" "D-static"))
-
-        ;; ("E-inherit"
-        ;;  :base-directory "~/org/"
-        ;;  :recursive t
-        ;;  :base-extension "css\\|js"
-        ;;  :publishing-directory "~/public_html/E/"
-        ;;  :publishing-function org-publish-attachment
-        ;;  )
-
-        ;; ("E-notes"
-        ;;  :base-directory "~/E/"
-        ;;  :auto-index t
-        ;;  :index-filename "sitemap.org"
-        ;;  :index-title "Sitemap"
-        ;;  :recursive t
-        ;;  :base-extension "org"
-        ;;  :publishing-directory "~/public_html/E/"
-        ;;  :publishing-function org-publish-org-to-html
-        ;;  :headline-levels 3
-        ;;  :auto-preamble t
-        ;;  )
-        ;; ("E-static"
-        ;;  :base-directory "~/E/"
-        ;;  :recursive t
-        ;;  :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"
-        ;;  :publishing-directory "~/public_html/E/"
-        ;;  :publishing-function org-publish-attachment)
-
-        ;; ;; ("E" :components ("E-inherit" "E-notes" "E-static"))
-
-        ;; ("inherit-org-info-js"
-        ;;  :base-directory "~/www/js/"
-        ;;  :recursive t
-        ;;  :base-extension "js"
-        ;;  :publishing-directory "~/public_html/js/"
-        ;;  :publishing-function org-publish-attachment)
-
-        ;; ;; ... all the rest ... ;;
-
-        ;; ("B" :components ("inherit-org-info-js" "B-inherit" "B-notes" "B-static"))
-        ;; ("C" :components ("inherit-org-info-js" "C-inherit" "C-notes" "C-static"))
-        ;; ("D" :components ("inherit-org-info-js" "D-inherit" "D-notes" "D-static"))
-        ;; ("E" :components ("inherit-org-info-js" "E-inherit" "E-notes" "E-static"))
-
-        ("lipt-notes"
-         :base-directory "~/lipt/"
+        ("index-notes"
+         ;; Path to your org files.
+         :base-directory "~/lipt/index/"
          :base-extension "org"
-         :publishing-directory "~/www/"
+         
+         ;; Path to your Jekyll project.
+         :publishing-directory "~/ldw5258.github.com/"
          :recursive t
          :publishing-function org-publish-org-to-html
+         :html-extension "html"
          :headline-levels 3             ; Just the default for this project.
          :auto-preamble t
+         :body-only t ;; Only export section between <body> </body>
+         :table-of-contents t
          )
-        ("lipt-static"
-         :base-directory "~/lipt/"
+
+        ("index-static"
+         :base-directory "~/lipt/index/"
          :base-extension "css\\|js\\|png\\|jpg\\|jpeg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"
-         :publishing-directory "~/www/"
+         :publishing-directory "~/ldw5258.github.com/"
          :recursive t
          :publishing-function org-publish-attachment
          )
-        ("lipt" :components ("lipt-notes" "lipt-static"))
+        ("index" :components ("index-notes" "index-static"))
+
+        ("people-notes"
+         ;; Path to your org files.
+         :base-directory "~/lipt/people/"
+         :base-extension "org"
+         
+         ;; Path to your Jekyll project.
+         :publishing-directory "~/ldw5258.github.com/people"
+         :recursive t
+         :publishing-function org-publish-org-to-html
+         :html-extension "html"
+         :headline-levels 3             ; Just the default for this project.
+         :auto-preamble t
+         :body-only t ;; Only export section between <body> </body>
+         )
+
+        ("people-static"
+         :base-directory "~/lipt/people/"
+         :base-extension "css\\|js\\|png\\|jpg\\|jpeg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"
+         :publishing-directory "~/ldw5258.github.com/people/"
+         :recursive t
+         :publishing-function org-publish-attachment
+         )
+        ("people" :components ("people-notes" "people-static"))
+
+        ("tech-notes"
+         ;; Path to your org files.
+         :base-directory "~/lipt/technology/"
+         :base-extension "org"
+         
+         ;; Path to your Jekyll project.
+         :publishing-directory "~/ldw5258.github.com/technology/"
+         :recursive t
+         :publishing-function org-publish-org-to-html
+         :html-extension "html"
+         :headline-levels 3             ; Just the default for this project.
+         :auto-preamble t
+         ;; :auto-sitemap t                ; Generate sitemap.org automagically...
+         ;; :sitemap-filename "sitemap.org"  ; ... call it sitemap.org (it's the default)...
+         ;; :sitemap-title "Sitemap"         ; ... with title 'Sitemap'.
+         :body-only t ;; Only export section between <body> </body>
+         :table-of-contents t
+         )
+
+        ("tech-index"
+         ;; Path to your org files.
+         :base-directory "~/lipt/technology/"
+         :base-extension "org"
+         
+         ;; Path to your Jekyll project.
+         :publishing-directory "~/ldw5258.github.com/technology/"
+         :publishing-function org-publish-org-to-html
+         :html-extension "html"
+         :headline-levels 3             ; Just the default for this project.
+         ;; :table-of-contents t
+         )
+p
+        ("tech-static"
+         :base-directory "~/lipt/technology/"
+         :base-extension "css\\|js\\|png\\|jpg\\|jpeg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"
+         :publishing-directory "~/ldw5258.github.com/technology/"
+         :recursive t
+         :publishing-function org-publish-attachment
+         )
+        ("tech" :components ("tech-notes" "tech-static"))
 
         ("diary-notes"
          :base-directory "/usr/lib/diary/"
