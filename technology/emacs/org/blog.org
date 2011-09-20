@@ -1,0 +1,159 @@
+# -*- org -*-
+
+# Time-stamp: <2011-09-19 00:32:16 Monday by ldw>
+
+#+OPTIONS: ^:nil author:nil timestamp:nil creator:nil H:3
+
+#+STARTUP: indent
+
+#+TITLE:告别wordpress，拥抱jekyll
+
+#+AUTHOR:
+
+#+SETUPFILE:~/dea/templates/level-0.org
+
+
+jekyll是近些年来比较流行的轻量级博客系统，它也是一个强大的静态网站生成系统。本文简要介绍了从wordpress迁移到jekyll的一些注意事项。
+主要特点
+
++    直接使用Markdown文件作为默认模版语言。
++    支持通过git跟踪所有内容。 * 有大量的知名程序员在使用，并且有大量的模版。 * 支持自动生成静态网站。
+
+
+** 安装
+
+很简单，
+
+: gem install jekyll
+
+如果不需要用默认的模版Maruku,想使用RDiscount，则请安装：
+
+: gem install RDiscount
+
+更多细节可以参考官网
+
+有好事者做了一个比较，Maruku是纯ruby的Markdown模版解释器；RDiscount则是c写的模版解释器，两者的效率显然不同：
+
+#+begin_center
+ * BlueCloth: 13.029987s total time, 00.130300s average
+ * Maruku: 08.424132s total time, 00.084241s average
+ * RDiscount: 00.082019s total time, 00.000820s average
+#+end_center
+
+** 使用
+
+安装完jekyll的gem之后，然后运行它，生成一个自己的网站。然后进入自己的jekyll目录，首先配置以下_config.yml文件，指定未来生成的网站的路径以及其他参数。然后运行：
+
+: jekyll --server
+
+关于jekyll的用法与配置官方解释很详细，请自行阅读。
+
+用习惯jekyll的人会觉得很舒服，它一贯地继承了Mac下的软件的特点：简洁；漂亮，同时还很有rails约定大于配置的精神，通过目录等默认文件即可构成一个强大的网站系统。
+
+如果默认模版是使用rdiscount，则请修改_config.yml文件：
+
+: markdown: rdiscount
+
+导入wordpress数据
+
+导入其他博客系统的文章，可以参考官网。导入wordpress的主要步骤如下：
+
+    找到jekyll gem库下的migrate文件夹下面的文件wordpress。rb，具体路径可以通过 gem environment命令找到你当前所在的gemset环境之下。也可以按照官方教程，安装一个open_gem的插件。
+
+    在自己的jekyll实例站点，新建一个_import目录，将wordpress.rb文件复制到此。
+
+    安装两个读取mysql数据库的插件，
+
+: gem install sequel mysqlplus
+
+    默认的文件不支持utf8，请修改：
+
+    #修改之前：db = Sequel.mysql(dbname, :user => user, :password => pass, :host => host)	
+    db = Sequel.mysql(dbname, :user => user, :password => pass, :host => host, :encoding => 'utf8') #修改之后
+
+    然后在Shell进入_import目录中，运行以下命令，请将相应的路径，wordpress的数据库的名字，连接数据库的用户名与密码修改为自己对应的。
+
+    #+begin_src sh
+    export LC_ALL=en_US.UTF-8
+    export LANG=en_US.UTF-8
+    export DB=xingfukenet      #请修改为自己的wordpress数据库名字
+    export USER=root           #请修改为自己的wordpress数据库用户名
+    export PASS=               #请修改为自己的wordpress数据库密码
+    ruby -r 'wordpress.rb' -e 'Jekyll::WordPress.process( "#{ENV["DB"]}", "#{ENV["USER"]}", "#{ENV["PASS"]}")'
+    #+end_src
+如果需要对导入的细节进行定制，可以修改wordpressrb.rb文件中的语句，比如，只导入某个作者的文章：
+
+QUERY = "select post_title, post_name, post_date, post_content, post_excerpt, ID, guid from wp_posts where post_status = 'publish' and post_type = 'post' and post_author=12"
+
+
+** YAML格式的问题
+
+YAML格式默认是：参数＋：＋空格，如果忘记写空格描绘编译报错。jekyll用的最频繁的几个参数如下所示，更多参数可参考官网wiki。
+
+title: 如何学习ruby and rails杂谈
+excerpt: 如果希望享受编程的乐趣，ruby与rails或许是比c＃与asp.net等更好的选择。
+layout: tech-post
+
+请注意冒号之后的空格。如果少了空格，编译通不过。另外，请注意ruby的to_yaml函数默认会使用ruby内置的对中文字符处理方式，会将string输出为
+
+title: !binary |
+	  44CQ5bm456aP6K++44CR5oiR5Lus55yf55qE6ZyA6KaB44CK572R57uc5oiQ
+	  55i+6K+K5pat5qCH5YeG44CL5ZCX77yf
+
+这种格式。这是由于ruby默认的yaml库对utf8的支持导致的。我们需要对其做处理。一种办法是调用require ‘yaml/encoding’，而更安全的办法则是：require ‘ya2yaml’，修改之后的wordpress.rb如下所示：
+
+$KCODE = 'UTF8' unless RUBY_VERSION >= '1.9'
+require 'rubygems'
+require 'sequel'
+require 'fileutils'
+require 'yaml'
+require 'ya2yaml'
+。。。
+。。。
+
+# Get the relevant fields as a hash, delete empty fields and convert
+# to YAML for the header
+ data=
+ {
+    'layout' => 'psy-post',
+    'title' => title,
+    'excerpt' => post[:post_excerpt],
+    'wordpress_id' => post[:ID],
+    'wordpress_url' => post[:guid]
+  }.delete_if { |k,v| v.nil? || v == ''}.ya2yaml(:syck_compatible => true)
+。。。
+。。。
+
+如果需要对原来的wordpress的html代码进行过滤，可以如此处理：
+
+	require 'rubygems'
+	require 'hpricot'  
+	require 'hpricot_scrub'
+	...
+	content = post[:post_content].scrub(:allow_tags => ['table', 'tbody','tr','td','div','a','blockquote','img'])  
+	＃table，tbody等标签保留下来。
+	...
+
+导入到github pages
+
+首先在本地测试通过，注意目前github pages使用的jekyll为：0.7.0， 运行：
+
+jekyll --pygments --safe --server
+
+然后在自己的github库中创建一个username.github.com的库。
+
+将自己的jekyll实例复制到本地的该库中，然后推送即可。
+
+git remote add username ...
+git push username
+
+推送成功之后，可以使用http://username.github.com/浏览自己的个人网站。如果希望自定义域名，也很简单，创建一个CNAME文件，内容为你的域名即可。
+
+更多说明，可以参考：
+
+http://pages.github.com/
+享受云计算时代的快乐
+
+在一切都向云计算迈步的今天，jekyll本身是不带评论系统的，一般是使用disqus的云评论服务。安装很简单，去官网自行注册一个免费帐号，然后按照提示，一步一步往下走就可以了。到了需要导入评论的时候，则请参照disqus的开放api与相关工具。这样以后，你的个人博客的评论随身携带，不用担心随着博客系统迁移而丢失。
+
+不仅是评论可以在云中，写作的所有进程也可以托管在云中。与wordpress的版本跟踪相比较，必须使用wordpress后台来写的时候才能版本跟踪，你可以将自己的jekyll实例托管到github上去。如果对github不熟悉，或许有必要了解一下关于git的基础知识。熟悉的朋友则很好办了，直接进入jekyll实例目录,然后分别执行git的常规操作，就可以拥有一份由github保管的备份。可以非常详细地记录你一切写作的进程，而不用担心版本丢失。由于git的强大，使得你能将在任何离线环境之下，对自己的文章、代码等进行的操作，都可以在联机之后，推送到服务器上。jekyll与git以及Markdown的先天结合，可以随时随地进行版本跟踪，也许这点是极客们日益喜欢它最重要的原因。
