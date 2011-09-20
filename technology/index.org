@@ -1,0 +1,42 @@
+# -*- org -*-
+
+# Time-stamp: <2011-09-19 19:23:57 Monday by ldw>
+
+#+OPTIONS: ^:nil author:nil timestamp:nil creator:nil H:2
+
+#+STARTUP: indent
+
+#+STYLE: <link rel="stylesheet" type="text/css" href="../css/org.css" />
+
+
+#+TITLE: 技术的纠结
+
+
+#+LINK_UP: ../index.html
+
+* 文档处理
+
+
+  
+** emacs - 传说中的编辑器
+
+   
+*** org-mode
+
+
+    
+* 版本控制
+
+  
+** git - 专为Linux内核开发而开发
+
+   
+** svn
+
+   
+* 发表
+
+  
+** github
+
+   [[file:github/GitHub的研发管理之道.org][GitHub的研发管理之道]]

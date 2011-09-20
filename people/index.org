@@ -1,0 +1,24 @@
+# -*- org -*-
+
+# Time-stamp: <2011-09-19 16:52:32 Monday by ldw>
+
+#+OPTIONS: ^:nil author:nil timestamp:nil creator:nil H:2
+
+#+STARTUP: indent
+
+
+#+TITLE: 人物大家
+
+
+#+begin_html
+---
+layout: default
+title: 人物大家
+subtitle: Life in Plain Text
+---
+#+end_html
+
+
+
+* 一
+* 二

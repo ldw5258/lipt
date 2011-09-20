@@ -1,5 +1,6 @@
 # -*- org -*-
 
+<<<<<<< HEAD
 # Time-stamp: <2011-09-19 00:32:16 Monday by ldw>
 
 #+OPTIONS: ^:nil author:nil timestamp:nil creator:nil H:3
@@ -157,3 +158,108 @@ http://pages.github.com/
 在一切都向云计算迈步的今天，jekyll本身是不带评论系统的，一般是使用disqus的云评论服务。安装很简单，去官网自行注册一个免费帐号，然后按照提示，一步一步往下走就可以了。到了需要导入评论的时候，则请参照disqus的开放api与相关工具。这样以后，你的个人博客的评论随身携带，不用担心随着博客系统迁移而丢失。
 
 不仅是评论可以在云中，写作的所有进程也可以托管在云中。与wordpress的版本跟踪相比较，必须使用wordpress后台来写的时候才能版本跟踪，你可以将自己的jekyll实例托管到github上去。如果对github不熟悉，或许有必要了解一下关于git的基础知识。熟悉的朋友则很好办了，直接进入jekyll实例目录,然后分别执行git的常规操作，就可以拥有一份由github保管的备份。可以非常详细地记录你一切写作的进程，而不用担心版本丢失。由于git的强大，使得你能将在任何离线环境之下，对自己的文章、代码等进行的操作，都可以在联机之后，推送到服务器上。jekyll与git以及Markdown的先天结合，可以随时随地进行版本跟踪，也许这点是极客们日益喜欢它最重要的原因。
+=======
+# Time-stamp: <2011-09-19 10:12:04 Monday by ldw>
+
+#+OPTIONS: ^:nil author:nil timestamp:nil creator:nil H:2
+
+#+STARTUP: indent
+
+
+** jekyll
+
+
+
+Introduction
+
+This tutorial will be about a great tool I found couple weeks ago, called Jekyll.
+
+Jekyll is a “blog-aware, static site generator”. What does it mean? Well, basically it generates complete static html site based on your templates. It’s great for small, informative webpages or minimalistic, yet powerful blogs. It runs this one too:)
+
+Imagine you are creating a simple web page for a client. Nothing fancy, just plain HTML + CSS, some sub-pages containing informations about the company, products, contact info, etc. Normally you’ll create many HTML files, each one containing the same headers and other stuff, over and over. You’ll probably make many mistakes:(.
+
+But there’s more convenient way to do this. Jekyll to the rescue!
+Installation
+
+Jekyll installation is easy-as-pie through rubygems.
+
+$ sudo gem install jekyll
+
+You’ll probably need to install rubygems first. And Ruby itself, if you already don’t got it. Shame on you!
+
+Once Jekyll has been installed, lets go to our working directory and create some stuff.
+Directory structure
+
+To work with Jekyll you need to create following directories and files:
+
+    _config.yml - this file will contain all configuration for Jekyll to run. Leave it empty for now.
+
+    _layouts - this will contain all, well, layouts:) We’ll get to it in a while.
+
+    _includes
+
+Layouts
+
+Layouts are the files used on the top of rendering new page. They’ll basically contain DOCTYPE, <head> and such stuff.
+
+Go on and create your first layout in _layouts dir, called “main.html”. Put in this code:
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+ <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+	<head>
+		<title>My page</title>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<meta http-equiv="content-language" content="en" />
+	</head>
+	<body>
+		{{ content }}
+	</body>
+ </html>
+
+Notice the strange ” {{ content }} ” statement? That’s the liquid tag : Liquid is a templating language which Jekyll uses. We’ll be seeing such tags quite often in the future.
+
+So what does it do? All contents rendered will be placed instead of this tag. So basically Layout is the static part of your site (eg. header, logo, navigation), while content changes depending on what sub-site is user visiting.
+Pages
+
+Let’s go on and create our first page. That will be probably index.html. But see how it differs from ordinary index.html:
+
+---
+layout: main
+title: Home page
+---
+
+<h1 class="color1">Welcome to my site.</h1>
+<p>My name is Tomasz 'pewiniak747' Pewiński blablabla...</p>
+
+Pretty short, huh? We don’t need to write all unnesessary boring DOCTYPES, <body>s etc, it all will be inserted instead of {{ content }} by Jekyll magic.
+
+YAML front matter (’–––’) is our spell. See how we told Jekyll to use main layout to render this page?
+Showtime!
+
+Time to see Jekyll in action! But first, open _config.yml that I mentioned before and insert following lines:
+
+The first one fires up a simple server, so we can see changes by pointing the browser to localhost:4000
+
+Second command invokes automatic Jekyll update when any of project files was changed, preventing us from running Jekyll all the time manually.
+
+Once you saved the _config.yml, navigate to your working directory and execute Jekyll:
+
+& cd path/to/project
+& jekyll
+
+(If you dislike editing config files you could use:)
+
+$ jekyll --server --auto
+
+Point your browser to localhost and see the page source. index.html has been merged with main.html to produce full-equipped standalone index.html, which lives in just created _site directory. Magic!
+
+Let’s see some more. Go back to your layout and edit <title> tag:
+
+<title>{{ page.title }}</title>
+
+Refresh, and parameter ‘title’ specified in YAML front matter in index.html will be placed instead of this tag. You can pass any parameter and display it that way.
+Conclusion
+
+With this tutorial you will be able to create simple web pages. In future tutorails I’ll show some advanced Jekyll features eg. posts, embeded ruby code or includes. See you soon!
+>>>>>>> a890b63e9b4c4c471704b6bfab54673d73830e12
