@@ -1,0 +1,15 @@
+# -*- org -*-
+
+# Time-stamp: <2011-09-21 13:19:41 Wednesday by ldw>
+
+#+OPTIONS: ^:nil author:nil timestamp:nil creator:nil H:3
+
+#+STARTUP: indent
+
+#+TITLE: 随机过程论
+
+#+AUTHOR:
+
+#+STYLE: <link rel="stylesheet" type="text/css" href="/css/org.css" />
+
+

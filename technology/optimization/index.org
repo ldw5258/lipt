@@ -1,0 +1,23 @@
+# -*- org -*-
+
+# Time-stamp: <2011-09-21 12:56:53 Wednesday by ldw>
+
+#+OPTIONS: ^:nil author:nil timestamp:nil creator:nil H:3
+
+#+STARTUP: indent
+
+#+TITLE:优化
+
+#+AUTHOR:
+
+#+STYLE: <link rel="stylesheet" type="text/css" href="/css/org.css" />
+
+
+
+* 简介
+  
+
+* 传统优化
+
+  
+* 全局优化

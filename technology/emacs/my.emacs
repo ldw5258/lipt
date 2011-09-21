@@ -630,6 +630,19 @@
          :recursive t
          :publishing-function org-publish-attachment
          )
+        ("people-index"
+         ;; Path to your org files.
+         :base-directory "~/lipt/people/"
+         :base-extension "org"
+         
+         ;; Path to your Jekyll project.
+         :publishing-directory "~/ldw5258.github.com/people"
+         :publishing-function org-publish-org-to-html
+         :html-extension "html"
+         :headline-levels 3             ; Just the default for this project.
+         :auto-preamble t
+         )
+
         ("people" :components ("people-notes" "people-static"))
 
         ("tech-notes"
@@ -648,7 +661,7 @@
          ;; :sitemap-filename "sitemap.org"  ; ... call it sitemap.org (it's the default)...
          ;; :sitemap-title "Sitemap"         ; ... with title 'Sitemap'.
          :body-only t ;; Only export section between <body> </body>
-         :table-of-contents t
+         ;; :table-of-contents t
          )
 
         ("tech-index"
@@ -661,9 +674,10 @@
          :publishing-function org-publish-org-to-html
          :html-extension "html"
          :headline-levels 3             ; Just the default for this project.
+         :auto-preamble t
          ;; :table-of-contents t
          )
-p
+
         ("tech-static"
          :base-directory "~/lipt/technology/"
          :base-extension "css\\|js\\|png\\|jpg\\|jpeg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"
@@ -680,7 +694,7 @@ p
          :recursive t
          :publishing-function org-publish-org-to-html
          :headline-levels 3             ; Just the default for this project.
-         :auto-preamble t
+            :auto-preamble t
          )
         ("diary-static"
          :base-directory "/usr/lib/diary/"
@@ -693,35 +707,62 @@ p
 
         
         ("jing-inherit"
-         :base-directory "~/www/"
+         :base-directory "~/lipt/index/"
          :recursive t
          :base-extension "css\\|js"
-         :publishing-directory "~/www/human-word/people/jingdiwangtian/"
+         :publishing-directory "~/ldw5258.github.com/people/jdwt/"
          :publishing-function org-publish-attachment
          )
 
         ("jing-notes"
-         :base-directory "~/lipt/human-word/people/jingdiwangtian/"
+         :base-directory "~/lipt/people/jingdiwangtian/"
          :auto-index t
-         :index-filename "sitemap.org"
-         :index-title "Sitemap"
-         :auto-sitemap t                ; Generate sitemap.org automagically...
-         :sitemap-filename "sitemap.org"  ; ... call it sitemap.org (it's the default)...
-         :sitemap-title "Sitemap"         ; ... with title 'Sitemap'.
+         ;; :index-filename "sitemap.org"
+         ;; :index-title "Sitemap"
+         ;; :auto-sitemap t                ; Generate sitemap.org automagically...
+         ;; :sitemap-filename "sitemap.org"  ; ... call it sitemap.org (it's the default)...
+         ;; :sitemap-title "Sitemap"         ; ... with title 'Sitemap'.
 
          :recursive t
          :base-extension "org"
-         :publishing-directory "~/www/human-word/people/jingdiwangtian/"
+         :publishing-directory "~/ldw5258.github.com/people/jingdiwangtian/"
+         :publishing-function org-publish-org-to-html
+         :headline-levels 3
+         :auto-preamble t
+         :body-only t ;; Only export section between <body> </body>
+         )
+
+        ("jing-xianhua"
+         :base-directory "~/lipt/people/jingdiwangtian/xianhua/"
+         :auto-index t
+         :recursive t
+         :base-extension "org"
+         :publishing-directory "~/ldw5258.github.com/people/jingdiwangtian/xianhua/"
+         :publishing-function org-publish-org-to-html
+         :headline-levels 3
+         :auto-preamble t
+         :body-only t ;; Only export section between <body> </body>
+         )
+
+        ("jing-static"
+         :base-directory "~/lipt/people/jingdiwangtian/"
+         :recursive t
+         :base-extension "css\\|js\\|png\\|jpg\\|jpeg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"
+         :publishing-directory "~/ldw5258.github.com/people/jdwt/"
+         :publishing-function org-publish-attachment
+         )
+        ("jing-index"
+         :base-directory "~/lipt/people/jingdiwangtian/"
+         :auto-index t
+
+         :base-extension "org"
+         :publishing-directory "~/ldw5258.github.com/people/jingdiwangtian/"
          :publishing-function org-publish-org-to-html
          :headline-levels 3
          :auto-preamble t
          )
-        ("jing-static"
-         :base-directory "~/lipt/human-word/people/jingdiwangtian/"
-         :recursive t
-         :base-extension "css\\|js\\|png\\|jpg\\|jpeg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"
-         :publishing-directory "~/www/human-word/people/jingdiwangtian/"
-         :publishing-function org-publish-attachment)
+        
+        
 
 
         ("jin-inherit"
@@ -755,37 +796,204 @@ p
          :publishing-directory "~/www/human-word/people/jinhong/"
          :publishing-function org-publish-attachment)
 
-        
-        ("tech-inherit"
-         :base-directory "~/www/"
+        ("inherit-org-info-js"
+         :base-directory "~/lipt/index/js/"
          :recursive t
-         :base-extension "css\\|js"
-         :publishing-directory "~/www/technology/"
-         :publishing-function org-publish-attachment
+         :base-extension "js"
+         :publishing-directory "~/ldw5258.github.com/js/"
+         :publishing-function org-publish-attachment)
+
+        ("org-ianbarton"
+         ;; Path to your org files.
+         :base-directory "~/devel/"
+         :base-extension "org"
+
+         ;; Path to your Jekyll project.
+         :publishing-directory "~/ldw5258.github.com/"
+         :recursive t
+         :publishing-function org-publish-org-to-html
+         :headline-levels 4 
+         :html-extension "html"
+         :body-only t ;; Only export section between <body> </body>
          )
 
-        ("tech-notes"
-         :base-directory "~/lipt/technology/"
-         :auto-index t
-         :index-filename "sitemap.org"
-         :index-title "Sitemap"
-         :auto-sitemap t                ; Generate sitemap.org automagically...
-         :sitemap-filename "sitemap.org"  ; ... call it sitemap.org (it's the default)...
-         :sitemap-title "Sitemap"         ; ... with title 'Sitemap'.
 
+        ("org-static-ian"
+         :base-directory "~/devel/"
+         :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf\\|php"
+         :publishing-directory "~/ldw5258.github.com/"
+         :recursive t
+         :publishing-function org-publish-attachment)
+
+        ("ian" :components ("org-ianbarton" "org-static-ian"))
+
+
+        ;; ... all the rest ... ;;
+
+        ("jing" :components ("inherit-org-info-js" "jing-inherit" "jing-notes" "jing-static"))
+        ("jin" :components ("inherit-org-info-js" "jin-inherit" "jin-notes" "jin-static"))
+        
+        ("history-notes"
+         :base-directory "~/lipt/history/"
+         :auto-index t
          :recursive t
          :base-extension "org"
-         :publishing-directory "~/www/technology/"
+         :publishing-directory "~/ldw5258.github.com/history/"
+         :publishing-function org-publish-org-to-html
+         :headline-levels 3
+         :auto-preamble t
+         :body-only t ;; Only export section between <body> </body>
+         )
+
+        ("history-static"
+         :base-directory "~/lipt/history/"
+         :recursive t
+         :base-extension "css\\|js\\|png\\|jpg\\|jpeg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"
+         :publishing-directory "~/ldw5258.github.com/history/"
+         :publishing-function org-publish-attachment
+         )
+        
+        ("history-index"
+         :base-directory "~/lipt/history/"
+         :auto-index t
+
+         :base-extension "org"
+         :publishing-directory "~/ldw5258.github.com/history/"
          :publishing-function org-publish-org-to-html
          :headline-levels 3
          :auto-preamble t
          )
-        ("tech-static"
-         :base-directory "~/lipt/technology/"
+        ("history" :components ("history-notes" "hitory-static"))
+
+
+
+        ("opt-notes"
+         :base-directory "~/lipt/technology/optimization/"
+         :auto-index t
+         :recursive t
+         :base-extension "org"
+         :publishing-directory "~/ldw5258.github.com/technology/optimization/"
+         :publishing-function org-publish-org-to-html
+         :headline-levels 3
+         :auto-preamble t
+         :body-only t ;; Only export section between <body> </body>
+         )
+
+        ("opt-static"
+         :base-directory "~/lipt/technology/optimization/"
          :recursive t
          :base-extension "css\\|js\\|png\\|jpg\\|jpeg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"
-         :publishing-directory "~/www/technology/"
-         :publishing-function org-publish-attachment)
+         :publishing-directory "~/ldw5258.github.com/technology/optimization/"
+         :publishing-function org-publish-attachment
+         )
+        
+        ("opt-index"
+         :base-directory "~/lipt/technology/optimization/"
+         :auto-index t
+
+         :base-extension "org"
+         :publishing-directory "~/ldw5258.github.com/technology/optimization/"
+         :publishing-function org-publish-org-to-html
+         :headline-levels 3
+         :auto-preamble t
+         )
+        ("opt" :components ("opt-notes" "opt-static"))
+
+
+        ("info-notes"
+         :base-directory "~/lipt/technology/information_processing/"
+         :auto-index t
+         :recursive t
+         :base-extension "org"
+         :publishing-directory "~/ldw5258.github.com/technology/information_processing/"
+         :publishing-function org-publish-org-to-html
+         :headline-levels 3
+         :auto-preamble t
+         :body-only t ;; Only export section between <body> </body>
+         )
+
+        ("info-static"
+         :base-directory "~/lipt/technology/information_processing/"
+         :recursive t
+         :base-extension "css\\|js\\|png\\|jpg\\|jpeg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"
+         :publishing-directory "~/ldw5258.github.com/technology/information_processing/"
+         :publishing-function org-publish-attachment
+         )
+        
+        ("info-index"
+         :base-directory "~/lipt/technology/information_processing/"
+         :auto-index t
+
+         :base-extension "org"
+         :publishing-directory "~/ldw5258.github.com/technology/information_processing/"
+         :publishing-function org-publish-org-to-html
+         :headline-levels 3
+         :auto-preamble t
+         )
+        ("info" :components ("info-notes" "info-static"))
+
+        ("math-notes"
+         :base-directory "~/lipt/nature/math/"
+         :auto-index t
+         :recursive t
+         :base-extension "org"
+         :publishing-directory "~/ldw5258.github.com/nature/math/"
+         :publishing-function org-publish-org-to-html
+         :headline-levels 3
+         :auto-preamble t
+         :body-only t ;; Only export section between <body> </body>
+         )
+
+        ("math-static"
+         :base-directory "~/lipt/nature/math/"
+         :recursive t
+         :base-extension "css\\|js\\|png\\|jpg\\|jpeg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"
+         :publishing-directory "~/ldw5258.github.com/nature/math/"
+         :publishing-function org-publish-attachment
+         )
+        
+        ("math-index"
+         :base-directory "~/lipt/nature/math/"
+         :auto-index t
+
+         :base-extension "org"
+         :publishing-directory "~/ldw5258.github.com/nature/math/"
+         :publishing-function org-publish-org-to-html
+         :headline-levels 3
+         :auto-preamble t
+         )
+        ("math" :components ("math-notes" "math-static"))
+
+        ;; ("tech-inherit"
+        ;;  :base-directory "~/www/"
+        ;;  :recursive t
+        ;;  :base-extension "css\\|js"
+        ;;  :publishing-directory "~/www/technology/"
+        ;;  :publishing-function org-publish-attachment
+        ;;  )
+
+        ;; ("tech-notes"
+        ;;  :base-directory "~/lipt/technology/"
+        ;;  :auto-index t
+        ;;  :index-filename "sitemap.org"
+        ;;  :index-title "Sitemap"
+        ;;  :auto-sitemap t                ; Generate sitemap.org automagically...
+        ;;  :sitemap-filename "sitemap.org"  ; ... call it sitemap.org (it's the default)...
+        ;;  :sitemap-title "Sitemap"         ; ... with title 'Sitemap'.
+
+        ;;  :recursive t
+        ;;  :base-extension "org"
+        ;;  :publishing-directory "~/www/technology/"
+        ;;  :publishing-function org-publish-org-to-html
+        ;;  :headline-levels 3
+        ;;  :auto-preamble t
+        ;;  )
+        ;; ("tech-static"
+        ;;  :base-directory "~/lipt/technology/"
+        ;;  :recursive t
+        ;;  :base-extension "css\\|js\\|png\\|jpg\\|jpeg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"
+        ;;  :publishing-directory "~/www/technology/"
+        ;;  :publishing-function org-publish-attachment)
 
         ;; ("B" :components ("B-inherit" "B-notes" "B-static"))
 
@@ -877,43 +1085,43 @@ p
 
         ;; ;; ("E" :components ("E-inherit" "E-notes" "E-static"))
 
-        ("inherit-org-info-js"
-         :base-directory "~/lipt/js/"
-         :recursive t
-         :base-extension "js"
-         :publishing-directory "~/www/js/"
-         :publishing-function org-publish-attachment)
+        ;; ("inherit-org-info-js"
+        ;;  :base-directory "~/lipt/js/"
+        ;;  :recursive t
+        ;;  :base-extension "js"
+        ;;  :publishing-directory "~/www/js/"
+        ;;  :publishing-function org-publish-attachment)
 
-        ("org-ianbarton"
-         ;; Path to your org files.
-         :base-directory "~/devel/"
-         :base-extension "org"
+        ;; ("org-ianbarton"
+        ;;  ;; Path to your org files.
+        ;;  :base-directory "~/devel/"
+        ;;  :base-extension "org"
 
-         ;; Path to your Jekyll project.
-         :publishing-directory "~/ldw5258.github.com/"
-         :recursive t
-         :publishing-function org-publish-org-to-html
-         :headline-levels 4 
-         :html-extension "html"
-         :body-only t ;; Only export section between <body> </body>
-         )
-
-
-        ("org-static-ian"
-         :base-directory "~/devel/"
-         :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf\\|php"
-         :publishing-directory "~/ldw5258.github.com/"
-         :recursive t
-         :publishing-function org-publish-attachment)
-
-        ("ian" :components ("org-ianbarton" "org-static-ian"))
+        ;;  ;; Path to your Jekyll project.
+        ;;  :publishing-directory "~/ldw5258.github.com/"
+        ;;  :recursive t
+        ;;  :publishing-function org-publish-org-to-html
+        ;;  :headline-levels 4 
+        ;;  :html-extension "html"
+        ;;  :body-only t ;; Only export section between <body> </body>
+        ;;  )
 
 
-        ;; ... all the rest ... ;;
+        ;; ("org-static-ian"
+        ;;  :base-directory "~/devel/"
+        ;;  :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf\\|php"
+        ;;  :publishing-directory "~/ldw5258.github.com/"
+        ;;  :recursive t
+        ;;  :publishing-function org-publish-attachment)
 
-        ("jing" :components ("inherit-org-info-js" "jing-inherit" "jing-notes" "jing-static"))
-        ("jin" :components ("inherit-org-info-js" "jin-inherit" "jin-notes" "jin-static"))
-        ("tech" :components ("inherit-org-info-js" "tech-inherit" "tech-notes" "tech-static"))
+        ;; ("ian" :components ("org-ianbarton" "org-static-ian"))
+
+
+        ;; ;; ... all the rest ... ;;
+
+        ;; ("jing" :components ("inherit-org-info-js" "jing-inherit" "jing-notes" "jing-static"))
+        ;; ("jin" :components ("inherit-org-info-js" "jin-inherit" "jin-notes" "jin-static"))
+        ;; ("tech" :components ("inherit-org-info-js" "tech-inherit" "tech-notes" "tech-static"))
 
         ;; ("C" :components ("inherit-org-info-js" "C-inherit" "C-notes" "C-static"))
         ;; ("D" :components ("inherit-org-info-js" "D-inherit" "D-notes" "D-static"))

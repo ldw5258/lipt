@@ -1,6 +1,6 @@
 # -*- org -*-
 
-# Time-stamp: <2011-09-19 19:23:57 Monday by ldw>
+# Time-stamp: <2011-09-20 12:46:10 Tuesday by ldw>
 
 #+OPTIONS: ^:nil author:nil timestamp:nil creator:nil H:2
 
@@ -14,12 +14,10 @@
 
 #+LINK_UP: ../index.html
 
+
 * 文档处理
 
-
-  
 ** emacs - 传说中的编辑器
-
    
 *** org-mode
 

@@ -1,12 +1,12 @@
 # -*- org -*-
 
-# Time-stamp: <2011-08-23 16:51:13 Tuesday by ldw>
+# Time-stamp: <2011-09-20 13:37:05 Tuesday by ldw>
 
 #+OPTIONS: ^:nil author:nil timestamp:nil creator:nil H:2
 
 #+STARTUP: indent
 
-#+TITLE: 闲话1
+#+TITLE: 闲话之一：收音机听来的信息
 
 [2010-09-28 08:55:44]
 
