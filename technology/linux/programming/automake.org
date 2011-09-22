@@ -1,0 +1,177 @@
+# -*- org -*-
+
+# Time-stamp: <2011-09-22 17:39:16 Thursday by ldw>
+
+#+OPTIONS: ^:nil author:nil timestamp:nil creator:nil H:2
+
+#+STARTUP: indent
+
+
+#+TITLE:  Linux 项目管理
+
+#+STYLE: <link rel="stylesheet" type="text/css" href="/css/worg.css" />
+
+#+begin_html
+---
+layout: org-default-3
+title: Linux 项目管理
+---
+#+end_html
+
+** 软件安装
+
+: sudo aptitude install libtool autotool automake
+
+** 来自automake手册的例子
+
+目录结构:
+
+#+begin_example
+|-amhello
+    |----- README
+    |----- configure.ac
+    |----- src
+            |--- Makefile.am
+            |--- hello.c
+#+end_example
+
+文件README的内容:
+
+#+begin_example
+This is a demonstration package for GNU Automake.
+Type ‘info Automake’ to read the Automake manual.
+#+end_example
+
+文件configure.ac的内容:
+
+#+begin_example
+#                                               -*- Autoconf -*-
+# Process this file with autoconf to produce a configure script.
+
+AC_PREREQ([2.67])
+AC_INIT([hello], [1.0], [ldw5258@126.com])
+AC_CONFIG_SRCDIR([config.h.in])
+AC_CONFIG_HEADERS([config.h])
+AM_INIT_AUTOMAKE([-Wall -Werror foreign])
+
+# Checks for programs.
+AC_PROG_CC
+
+# Checks for libraries.
+
+# Checks for header files.
+
+# Checks for typedefs, structures, and compiler characteristics.
+
+# Checks for library functions.
+
+AC_CONFIG_FILES([
+Makefile
+src/Makefile
+])
+AC_OUTPUT
+#+end_example
+
+文件src/Makefile.am的内容:
+
+#+begin_example
+bin_PROGRAMS = hello
+hello_SOURCES = main.c
+#+end_example
+
+
+源文件src/hello.c的内容:
+
+#+begin_src C
+#include <config.h>
+#include <stdio.h>
+int main (int argc, char** argv)
+{
+    puts ("Hello World!");
+    puts ("This is " PACKAGE_STRING ".");
+    return 0;
+}
+#+end_src
+
+
+运行命令:
+
+#+begin_src sh
+$ autoreconf --install
+$ ./configure
+$ make
+$ src/hello
+#+end_src
+
+得到如下输出:
+
+#+begin_src sh
+Hello World!
+This is helloworld 1.1 .
+#+end_src
+
+
+** hellworld 之 gtk
+
+
+安装gtk开发包:
+
+#+begin_src sh
+$ sudo aptitude install libgtk2.0-dev
+#+end_src
+
+修改文件configure.ac,添加内容:
+
+
+#+begin_example
+AM_PATH_GTK_2_0(2.2.0,,AC_MSG_ERROR(gtkhello 0.1 needs GTK+ 2.2.0))
+#+end_example
+
+检查当前GTK版本是否符合要求.
+
+
+向文件src/Makefile.am添加:
+
+#+begin_example
+gtkhello_SOURCES = gtkhello.c
+AM_CPPFLAGS  = @GTK_CFLAGS@
+LDADD = @GTK_LIBS@
+#+end_example
+
+添加文件gtkhello.c:
+
+#+begin_src C
+#include <gtk/gtk.h>
+
+    int main(int argc, char *argv[]) {
+    GtkWidget *wnd;
+    GtkWidget *label;
+
+    gtk_init(&argc, &argv);
+
+    wnd = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    gtk_window_set_title(GTK_WINDOW(wnd), "Hello GTK+!");
+    gtk_window_set_default_size(GTK_WINDOW(wnd), 300, 200);
+
+    label = gtk_label_new("Hello, welcome to the GTK+ world in Ubuntu 9.10\n\n(C) 2010 Chinsoft Studio");
+    gtk_container_add(GTK_CONTAINER(wnd), label);
+
+    g_signal_connect(GTK_OBJECT(wnd), "destroy", G_CALLBACK(gtk_main_quit), NULL);
+
+    gtk_widget_show_all(wnd);
+    gtk_main();
+
+    return 0;
+}
+#+end_src
+
+执行命令:
+
+#+begin_src sh
+$ autoreconf --install
+$ ./configure
+$ make
+$ src/gtkhello
+#+end_src
+
+

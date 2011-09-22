@@ -964,6 +964,38 @@
          )
         ("math" :components ("math-notes" "math-static"))
 
+        ("linux-notes"
+         :base-directory "~/lipt/technology/linux/"
+         :auto-index t
+         :recursive t
+         :base-extension "org"
+         :publishing-directory "~/ldw5258.github.com/technology/linux/"
+         :publishing-function org-publish-org-to-html
+         :headline-levels 3
+         :auto-preamble t
+         :body-only t ;; Only export section between <body> </body>
+         )
+
+        ("linux-static"
+         :base-directory "~/lipt/technology/linux/"
+         :recursive t
+         :base-extension "css\\|js\\|png\\|jpg\\|jpeg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"
+         :publishing-directory "~/ldw5258.github.com/technology/linux/"
+         :publishing-function org-publish-attachment
+         )
+        
+        ("linux-index"
+         :base-directory "~/lipt/technology/linux/"
+         :auto-index t
+
+         :base-extension "org"
+         :publishing-directory "~/ldw5258.github.com/technology/linux/"
+         :publishing-function org-publish-org-to-html
+         :headline-levels 3
+         :auto-preamble t
+         )
+        ("linux" :components ("linux-notes" "linux-static"))
+
         ;; ("tech-inherit"
         ;;  :base-directory "~/www/"
         ;;  :recursive t
