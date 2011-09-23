@@ -1,0 +1,17 @@
+# -*- org -*-
+
+# Time-stamp: <2011-09-22 17:39:44 Thursday by ldw>
+
+#+OPTIONS: ^:nil author:nil timestamp:nil creator:nil H:2
+
+#+STARTUP: indent
+
+
+#+TITLE: Linux 学习笔记
+
+
+
+* Linux 程序设计
+
+
+  [[file:programming/automake.org][Linux 项目管理]]
