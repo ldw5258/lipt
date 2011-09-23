@@ -1,6 +1,6 @@
 # -*- org -*-
 
-# Time-stamp: <2011-09-20 12:46:10 Tuesday by ldw>
+# Time-stamp: <2011-09-21 21:27:49 Wednesday by ldw>
 
 #+OPTIONS: ^:nil author:nil timestamp:nil creator:nil H:2
 
@@ -38,3 +38,10 @@
 ** github
 
    [[file:github/GitHub的研发管理之道.org][GitHub的研发管理之道]]
+
+   
+** linux
+
+*** 编程
+
+[[file:linux/programming/automake.org][automake]]
