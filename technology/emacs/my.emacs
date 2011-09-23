@@ -996,6 +996,38 @@
          )
         ("linux" :components ("linux-notes" "linux-static"))
 
+        ("algorithm-notes"
+         :base-directory "~/lipt/algorithm/"
+         :auto-index t
+         :recursive t
+         :base-extension "org"
+         :publishing-directory "~/ldw5258.github.com/algorithm"
+         :publishing-function org-publish-org-to-html
+         :headline-levels 3
+         :auto-preamble t
+         :body-only t ;; Only export section between <body> </body>
+         )
+
+        ("algorithm-static"
+         :base-directory "~/lipt/algorithm/"
+         :recursive t
+         :base-extension "css\\|js\\|png\\|jpg\\|jpeg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"
+         :publishing-directory "~/ldw5258.github.com/algorithm"
+         :publishing-function org-publish-attachment
+         )
+        
+        ("algorithm-index"
+         :base-directory "~/lipt/algorithm/"
+         :auto-index t
+
+         :base-extension "org"
+         :publishing-directory "~/ldw5258.github.com/algorithm"
+         :publishing-function org-publish-org-to-html
+         :headline-levels 3
+         :auto-preamble t
+         )
+        ("algorithm" :components ("algorithm-notes" "algorithm-static"))
+
         ;; ("tech-inherit"
         ;;  :base-directory "~/www/"
         ;;  :recursive t

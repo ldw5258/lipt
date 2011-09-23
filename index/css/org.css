@@ -6,7 +6,9 @@
   p, blockquote, pre, a, abbr,
   acronym, address, code, del,
   dfn, em, img, q, dl, dt, dd,
-  ol, ul, li, fieldset, form,
+  ol,
+  /* ul, li, */
+  fieldset, form,
   label, legend, table, caption,
   tbody, tfoot, thead, tr, th,
   td {
@@ -77,11 +79,11 @@
       margin: 1em 0;
       line-height: 1.5;
       }
-  ul li {
-          margin-top: 0.8em;
-          margin-bottom: 0.8em;
-          list-style: url(images/h5.gif);
-          }
+  /* ul li { */
+  /*         margin-top: 0.8em; */
+  /*         margin-bottom: 0.8em; */
+  /*         list-style: url(images/h5.gif); */
+  /*         } */
   td {
        line-height: 1.5;
        padding: 2px 5px;
@@ -422,7 +424,7 @@
 
   pre {
         border: 1px solid #555;
-        background: #EEEEEE;
+        background: #aabbcc;
         font-size: 9pt;
         padding: 1em;
         }
