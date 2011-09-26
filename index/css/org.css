@@ -51,7 +51,7 @@
        letter-spacing: 2px;
        text-align: center;
        font-weight: normal;
-       font-size: 2em;
+       font-size: 3.1 em;
        font-weight: bold;
        line-height: 1.5em;
        padding: 30px 20px 10px 15px;
@@ -63,13 +63,13 @@
        }
   h2 {
        font-weight: normal;
-       font-size: 1.5em;
+       font-size: 2.3 em;
        margin: 1.75em 0 1em 0;
        color: #8298A1;
        background: url(images/h2.gif) no-repeat left bottom;
        }
   h3 {
-       font-size: 1.2em;
+       font-size: 1.7 em;
        padding: 4px 10px;
        margin-top: 0.5em;
        color: #8298A1;
@@ -90,7 +90,7 @@
        vertical-align: top;
        }
   th {
-       font-size: 1em;
+       font-size: 2em;
        padding: 2px 5px;
        text-align: left;
        border-top: solid 1px #000;
@@ -184,7 +184,7 @@
 
   .sidebar h3 {
                 font-weight: normal;
-                font-size: 1.3em;
+                font-size: 2.1 em;
                 border-top: solid 1px #000;
                 color: #536D79;
                 background: #1A2125 url(images/sidebar-h3.gif) repeat-x left bottom;
@@ -388,14 +388,14 @@
          background:#b0c0033; url('img/bgdesert.jpg') ;
          /*背景图像失效*/         
          /*    background-image:url('img/bgdesert.jpg');*/
-         font-size: 7pt;
+         font-size: 13 pt;
          text-align: left;
          line-height:1.2em;
          }
 
 
   #table-of-contents {
-                       font-size: 61.8%;
+                       font-size: 99.9 %;
                        line-height: 1.4em;
                        }
 

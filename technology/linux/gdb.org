@@ -1,0 +1,521 @@
+# -*- org -*-
+
+# Time-stamp: <2011-09-25 15:20:19 Sunday by ldw>
+
+#+OPTIONS: ^:nil author:nil timestamp:nil creator:nil H:3 LaTeX:t
+
+#+STARTUP: indent
+
+#+TITLE: 平面扫描算法
+
+#+AUTHOR:
+
+#+STYLE: <link rel="stylesheet" type="text/css" href="/css/worg.css" />
+
+
+* base
+
+  用GDB调试程序
+
+GDB概述
+————
+
+GDB是GNU开源组织发布的一个强大的UNIX下的程序调试工具。或许，各位比较喜欢那种图形界面方式的，像VC、BCB等IDE的调试，但如果你是在UNIX平台下做软件，你会发现GDB这个调试工具有比VC、BCB的图形化调试器更强大的功能。所谓“寸有所长，尺有所短”就是这个道理。
+
+一般来说，GDB主要帮忙你完成下面四个方面的功能：
+
+    1、启动你的程序，可以按照你的自定义的要求随心所欲的运行程序。
+    2、可让被调试的程序在你所指定的调置的断点处停住。（断点可以是条件表达式）
+    3、当程序被停住时，可以检查此时你的程序中所发生的事。
+    4、动态的改变你程序的执行环境。
+
+从上面看来，GDB和一般的调试工具没有什么两样，基本上也是完成这些功能，不过在细节上，你会发现GDB这个调试工具的强大，大家可能比较习惯了图形化的调试工具，但有时候，命令行的调试工具却有着图形化工具所不能完成的功能。让我们一一看来。
+
+
+一个调试示例
+——————
+
+源程序：tst.c
+
+     1 #include <stdio.h>
+     2
+     3 int func(int n)
+     4 {
+     5         int sum=0,i;
+     6         for(i=0; i<n; i++)
+     7         {
+     8                 sum+=i;
+     9         }
+    10         return sum;
+    11 }
+    12
+    13
+    14 main()
+    15 {
+    16         int i;
+    17         long result = 0;
+    18         for(i=1; i<=100; i++)
+    19         {
+    20                 result += i;
+    21         }
+    22
+    23        printf("result[1-100] = %d /n", result );
+    24        printf("result[1-250] = %d /n", func(250) );
+    25 }
+
+编译生成执行文件：（Linux下）
+    hchen/test> cc -g tst.c -o tst
+
+使用GDB调试：
+
+hchen/test> gdb tst  <---------- 启动GDB
+GNU gdb 5.1.1
+Copyright 2002 Free Software Foundation, Inc.
+GDB is free software, covered by the GNU General Public License, and you are
+welcome to change it and/or distribute copies of it under certain conditions.
+Type "show copying" to see the conditions.
+There is absolutely no warranty for GDB.  Type "show warranty" for details.
+This GDB was configured as "i386-suse-linux"...
+(gdb) l     <-------------------- l命令相当于list，从第一行开始例出原码。
+1        #include <stdio.h>
+2
+3        int func(int n)
+4        {
+5                int sum=0,i;
+6                for(i=0; i<n; i++)
+7                {
+8                        sum+=i;
+9                }
+10               return sum;
+(gdb)       <-------------------- 直接回车表示，重复上一次命令
+11       }
+12
+13
+14       main()
+15       {
+16               int i;
+17               long result = 0;
+18               for(i=1; i<=100; i++)
+19               {
+20                       result += i;   
+(gdb) break 16    <-------------------- 设置断点，在源程序第16行处。
+Breakpoint 1 at 0x8048496: file tst.c, line 16.
+(gdb) break func  <-------------------- 设置断点，在函数func()入口处。
+Breakpoint 2 at 0x8048456: file tst.c, line 5.
+(gdb) info break  <-------------------- 查看断点信息。
+Num Type           Disp Enb Address    What
+1   breakpoint     keep y   0x08048496 in main at tst.c:16
+2   breakpoint     keep y   0x08048456 in func at tst.c:5
+(gdb) r           <--------------------- 运行程序，run命令简写
+Starting program: /home/hchen/test/tst
+
+Breakpoint 1, main () at tst.c:17    <---------- 在断点处停住。
+17               long result = 0;
+(gdb) n          <--------------------- 单条语句执行，next命令简写。
+18               for(i=1; i<=100; i++)
+(gdb) n
+20                       result += i;
+(gdb) n
+18               for(i=1; i<=100; i++)
+(gdb) n
+20                       result += i;
+(gdb) c          <--------------------- 继续运行程序，continue命令简写。
+Continuing.
+result[1-100] = 5050       <----------程序输出。
+
+Breakpoint 2, func (n=250) at tst.c:5
+5                int sum=0,i;
+(gdb) n
+6                for(i=1; i<=n; i++)
+(gdb) p i        <--------------------- 打印变量i的值，print命令简写。
+$1 = 134513808
+(gdb) n
+8                        sum+=i;
+(gdb) n
+6                for(i=1; i<=n; i++)
+(gdb) p sum
+$2 = 1
+(gdb) n
+8                        sum+=i;
+(gdb) p i
+$3 = 2
+(gdb) n
+6                for(i=1; i<=n; i++)
+(gdb) p sum
+$4 = 3
+(gdb) bt        <--------------------- 查看函数堆栈。
+#0  func (n=250) at tst.c:5
+#1  0x080484e4 in main () at tst.c:24
+#2  0x400409ed in __libc_start_main () from /lib/libc.so.6
+(gdb) finish    <--------------------- 退出函数。
+Run till exit from #0  func (n=250) at tst.c:5
+0x080484e4 in main () at tst.c:24
+24              printf("result[1-250] = %d /n", func(250) );
+Value returned is $6 = 31375
+(gdb) c     <--------------------- 继续运行。
+Continuing.
+result[1-250] = 31375    <----------程序输出。
+
+Program exited with code 027. <--------程序退出，调试结束。
+(gdb) q     <--------------------- 退出gdb。
+hchen/test>
+
+好了，有了以上的感性认识，还是让我们来系统地认识一下gdb吧。
+
+ 
+
+
+使用GDB
+————
+
+一般来说GDB主要调试的是C/C++的程序。要调试C/C++的程序，首先在编译时，我们必须要把调试信息加到可执行文件中。使用编译器（cc/gcc/g++）的 -g 参数可以做到这一点。如：
+
+    > cc -g hello.c -o hello
+    > g++ -g hello.cpp -o hello
+
+如果没有-g，你将看不见程序的函数名、变量名，所代替的全是运行时的内存地址。当你用-g把调试信息加入之后，并成功编译目标代码以后，让我们来看看如何用gdb来调试他。
+
+启动GDB的方法有以下几种：
+
+    1、gdb <program>
+       program也就是你的执行文件，一般在当然目录下。
+
+    2、gdb <program> core
+       用gdb同时调试一个运行程序和core文件，core是程序非法执行后core dump后产生的文件。
+
+    3、gdb <program> <PID>
+       如果你的程序是一个服务程序，那么你可以指定这个服务程序运行时的进程ID。gdb会自动attach上去，并调试他。program应该在PATH环境变量中搜索得到。
+
+ 
+
+GDB启动时，可以加上一些GDB的启动开关，详细的开关可以用gdb -help查看。我在下面只例举一些比较常用的参数：
+
+    -symbols <file>
+    -s <file>
+    从指定文件中读取符号表。
+
+    -se file
+    从指定文件中读取符号表信息，并把他用在可执行文件中。
+
+    -core <file>
+    -c <file>
+    调试时core dump的core文件。
+
+    -directory <directory>
+    -d <directory>
+    加入一个源文件的搜索路径。默认搜索路径是环境变量中PATH所定义的路径。
+
+    
+* base2
+
+  七、八年前写过一篇《用GDB调试程序》，于是，从那以后，很多朋友在MSN上以及给我发邮件询问我关于GDB的问题，一直到今天，还有人在问GDB的相关问题。这么多年来，有一些问题是大家反复在问的，一方面，我觉得我以前的文章可能没有说清楚，另一方面，我觉得大家常问的问题正是最有用的，所以，在这里罗列出来。希望大家补充。
+一、多线程调试
+
+多线程调试可能是问得最多的。其实，重要就是下面几个命令：
+
+    info thread 查看当前进程的线程。
+    thread <ID> 切换调试的线程为指定ID的线程。
+    break file.c:100 thread all  在file.c文件第100行处为所有经过这里的线程设置断点。
+    set scheduler-locking off|on|step，这个是问得最多的。在使用step或者continue命令调试当前被调试线程的时候，其他线程也是同时执行的，怎么只让被调试程序执行呢？通过这个命令就可以实现这个需求。
+        off 不锁定任何线程，也就是所有线程都执行，这是默认值。
+        on 只有当前被调试程序会执行。
+        step 在单步的时候，除了next过一个函数的情况(熟悉情况的人可能知道，这其实是一个设置断点然后continue的行为)以外，只有当前线程会执行。
+
+二、调试宏
+
+这个问题超多。在GDB下，我们无法print宏定义，因为宏是预编译的。但是我们还是有办法来调试宏，这个需要GCC的配合。
+
+在GCC编译程序的时候，加上-ggdb3参数，这样，你就可以调试宏了。
+
+另外，你可以使用下述的GDB的宏调试命令 来查看相关的宏。
+
+    info macro – 你可以查看这个宏在哪些文件里被引用了，以及宏定义是什么样的。
+    macro – 你可以查看宏展开的样子。
+
+三、源文件
+
+这个问题问的也是很多的，太多的朋友都说找不到源文件。在这里我想提醒大家做下面的检查：
+
+    编译程序员是否加上了-g参数以包含debug信息。
+    路径是否设置正确了。使用GDB的directory命令来设置源文件的目录。
+
+下面给一个调试/bin/ls的示例（ubuntu下）
+	
+$ apt-get source coreutils
+$ sudo apt-get install coreutils-dbgsym
+$ gdb /bin/ls
+GNU gdb (GDB) 7.1-ubuntu
+(gdb) list main
+1192    ls.c: No such file or directory.
+in ls.c
+(gdb) directory ~/src/coreutils-7.4/src/
+Source directories searched: /home/hchen/src/coreutils-7.4:$cdir:$cwd
+(gdb) list main
+1192        }
+1193    }
+1194
+1195    int
+1196    main (int argc, char **argv)
+1197    {
+1198      int i;
+1199      struct pending *thispend;
+1200      int n_files;
+1201
+四、条件断点
+
+条件断点是语法是：break  [where] if [condition]，这种断点真是非常管用。尤其是在一个循环或递归中，或是要监视某个变量。注意，这个设置是在GDB中的，只不过每经过那个断点时GDB会帮你检查一下条件是否满足。
+五、命令行参数
+
+有时候，我们需要调试的程序需要有命令行参数，很多朋友都不知道怎么设置调试的程序的命令行参数。其实，有两种方法：
+
+    gdb命令行的 –args 参数
+    gdb环境中 set args命令。
+
+六、gdb的变量
+
+有时候，在调试程序时，我们不单单只是查看运行时的变量，我们还可以直接设置程序中的变量，以模拟一些很难在测试中出现的情况，比较一些出错，或是switch的分支语句。使用set命令可以修改程序中的变量。
+
+另外，你知道gdb中也可以有变量吗？就像shell一样，gdb中的变量以$开头，比如你想打印一个数组中的个个元素，你可以这样：
+	
+#+begin_src sh
+(gdb) set $i = 0
+ 
+(gdb) p a[$i++]
+
+...  #然后就一路回车下去了
+#+end_src 
+
+当然，这里只是给一个示例，表示程序的变量和gdb的变量是可以交互的。
+七、x命令
+
+也许，你很喜欢用p命令。所以，当你不知道变量名的时候，你可能会手足无措，因为p命令总是需要一个变量名的。x命令是用来查看内存的，在gdb中 “help x” 你可以查看其帮助。
+
+    x/x 以十六进制输出
+    x/d 以十进制输出
+    x/c 以单字符输出
+    x/i  反汇编 – 通常，我们会使用 x/10i $ip-20 来查看当前的汇编（$ip是指令寄存器）
+    x/s 以字符串输出
+
+八、command命令
+
+有一些朋友问我如何自动化调试。这里向大家介绍command命令，简单的理解一下，其就是把一组gdb的命令打包，有点像字处理软件的“宏”。下面是一个示例：
+	
+(gdb) break func
+Breakpoint 1 at 0x3475678: file test.c, line 12.
+(gdb) command 1
+Type commands for when breakpoint 1 is hit, one per line.
+End with a line saying just "end".
+>print arg1
+>print arg2
+>print arg3
+>end
+(gdb)
+
+当我们的断点到达时，自动执行command中的三个命令，把func的三个参数值打出来。
+
+
+
+* 1
+  在linux下用户主目录下增加.gdbinit文件，该文件是gdb启动的配置文件
+
+调试动态链接库时，在.gdbinit文件中加入
+
+add-shared-symbol-file  /usr/src/....(动态库的源程序位置)
+
+在调试的时候不能直接加上断点在动态库的函数上
+
+需要将断点加在调用动态库函数的程序上，当程序停止到该断点时，再将断点加在动态库的函数上，单步执行进入动态库的函数中
+
+* 2
+
+  用gdb调试动态链接库
+
+在 Linux 可以用 gdb 来调试应用程序，当然前提是用 gcc 编译程序时要加上 -g 参数。我这篇文章里将讨论一下用 gdb 来调试动态链接库的问题。首先，假设我们准备这样的一个动态链接库：引用：库名称是： ggg 动态链接库文件名是： libggg.so 头文件是： get.h 提供这样两个函数调用接口：
+
+   int get ();
+   int set (int a);
+
+要生成这样一个动态链接库，我们首先编写这样一个头文件:
+
+/************关于本文档********************************************
+*filename: get.h
+*********************************************************************/
+int get ();
+int set (int a);
+
+然后准备这样一个生成动态链接库的源文件：
+
+/************关于本文档********************************************
+*filename:  get.cpp
+*********************************************************************/
+#include <stdio.h>
+#include "get.h"
+
+static int x=0;
+int get ()
+{
+        printf ("get x=%d\n", x);
+        return x;
+}
+
+int set (int a)
+{
+        printf ("set a=%d\n", a);
+        x = a;
+        return x;
+}
+
+然后我们用 GNU 的 C/C++ 编译器来生成动态链接库，编译命令如下：
+
+g++ get.cpp -shared -g -DDEBUG -o libggg.so
+g++ get.cpp -shared -g -fPIC -DDEBUG -o libggg.so (64位机器)
+
+这样我们就准备好了动态链接库了，下面我们编写一个应用程序来调用此动态链接库，源代码如下：
+
+/************关于本文档********************************************
+*filename: pk.cpp
+*********************************************************************/
+#include <stdio.h>
+#include "get.h"
+int main (int argc, char** argv)
+{
+        int a = 100;
+        int b = get ();
+        int c = set (a);
+        int d = get ();
+
+        printf ("a=%d,b=%d,c=%d,d=%d\n",a,b,c,d);
+
+        return 0;
+}
+
+编译此程序用下列命令，如果已经把上面生成的 libggg.so 放到了库文件搜索路径指定的文件目录，比如 /lib 或 /usr/lib 之类的，就用下面这条命令：
+
+g++ pk.cpp -o app -Wall -g -lggg
+
+否则就用下面这条命令：
+
+g++ pk.cpp -o app -Wall -g -lggg -L`pwd`
+
+下面我们就开始调试上面命令生成的 app 程序吧。如果已经把上面生成的 libggg.so 放到了库文件搜索路径指定的文件目录，比如 /lib 或 /usr/lib 之类的，调试就顺利完成，如下：
+
+#gdb ./app
+GNU gdb 6.4-debian
+Copyright 2005 Free Software Foundation, Inc.
+GDB is free software, covered by the GNU General Public License, and you are
+welcome to change it and/or distribute copies of it under certain conditions.
+Type "show copying" to see the conditions.
+There is absolutely no warranty for GDB.  Type "show warranty" for details.
+This GDB was configured as "i486-linux-gnu"...Using host libthread_db library "/lib/tls/i686/cmov/libthread_db.so.1".
+
+(gdb) b main    /* 这是在程序的 main 处设置断点 */
+Breakpoint 1 at 0x804853c: file pk.cpp, line 7.
+(gdb) b set      /* 这是在程序的 set 处设置断点 */
+Function "set" not defined.
+Make breakpoint pending on future shared library load? (y or [n]) y /* 这里必须选择 y 调试程序才会跟踪到动态链接库内部去 */
+Breakpoint 2 (set) pending.
+(gdb) run /* 开始运行我们的程序，直到遇见断点时暂停 */
+Starting program: /data/example/c/app
+Breakpoint 3 at 0xb7f665f8: file get.cpp, line 11.
+Pending breakpoint "set" resolved
+
+Breakpoint 1, main (argc=1, argv=0xbf990504) at pk.cpp:7
+7               int a = 100;
+(gdb) n     /* 继续执行程序的下一行代码 */
+8               int b = get ();
+(gdb) n      /* 程序执行到了我们断点所在的动态链接库了 */
+get x=0
+9               int c = set (a);
+(gdb) n
+
+Breakpoint 3, set (a=100) at get.cpp:11
+11              printf ("set a=%d\n", a);
+(gdb) list   /* 查看当前代码行周围的代码，证明我们已经跟踪到动态链接库的源代码里面了 */
+6               printf ("get x=%d\n", x);
+7               return x;
+8       }
+9       int set (int a)
+10      {
+11              printf ("set a=%d\n", a);
+12              x = a;
+13              return x;
+14      }
+(gdb) n
+set a=100
+12              x = a;
+(gdb) n
+13              return x;
+(gdb) n
+14      }
+(gdb) n
+main (argc=1, argv=0xbf990504) at pk.cpp:10
+10              int d = get ();
+(gdb) n
+get x=100
+11              printf ("a=%d,b=%d,c=%d,d=%d\n",a,b,c,d);
+(gdb) n
+a=100,b=0,c=100,d=100
+12              return 0;
+(gdb) c
+Continuing.
+
+Program exited normally.
+(gdb) quit  /* 程序顺利执行结束 */
+
+如果我们没有把动态链接库放到指定目录，比如/lib里面，调试就会失败，过程如下：
+
+# gdb ./app
+GNU gdb 6.4-debian
+Copyright 2005 Free Software Foundation, Inc.
+GDB is free software, covered by the GNU General Public License, and you are
+welcome to change it and/or distribute copies of it under certain conditions.
+Type "show copying" to see the conditions.
+There is absolutely no warranty for GDB.  Type "show warranty" for details.
+This GDB was configured as "i486-linux-gnu"...Using host libthread_db library "/lib/tls/i686/cmov/libthread_db.so.1".
+
+(gdb) b main
+Breakpoint 1 at 0x804853c: file pk.cpp, line 7.
+(gdb) b set
+Function "set" not defined.
+Make breakpoint pending on future shared library load? (y or [n]) y
+Breakpoint 2 (set) pending.
+(gdb) run  /* 虽然调试操作都一样，但程序执行失败 */
+Starting program: /data/example/c/app
+/data/example/c/app: error while loading shared libraries: libggg.so: cannot open shared object file: No such file or directory
+
+Program exited with code 0177.
+(gdb) quit 
+
+调试失败的原因是因为gdb不能找到libggg.so，可以通过下面的方法解决：
+
+1) 将库路径加到LD_LIBRARY_PATH里
+2) 执行：ldconfig YOUR_LIB_PATH
+3) 在/etc/ld.so.conf里加入库所在路径。然后执行：ldconfig
+
+上面3个方法任意一个都可以，然后再去用gdb调试就没有问题了。
+
+另:
+
+1、假设我的可执行程序是ServerName，共享库为worker.so
+2、我用gdb调试ServerName，想在B的某个源文件（比如worker.cpp，worker.cpp与ServerName不在同一个目录下）中设置断点，使用下面的命令行break worker.cpp:123
+
+若找不到源文件可使用如下命令设定源文件目录：
+
+设定gdb环境变量 LD_PRELOAD，在执行程序前先把共享库代码load进来
+指定你的链接库的位置，可以通过设定环境变量LD_LIBRARY_PATH来实现
+
+拷贝到标准的lib搜寻目录下，例如/usr/lib等
+
+b main, r,然后再设置断点就可以了，共享库只有当程序运行才开始加载的 
+
+
+
+
+
+
+
+
+
+
+
+

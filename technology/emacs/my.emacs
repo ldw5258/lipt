@@ -973,7 +973,7 @@
          :publishing-function org-publish-org-to-html
          :headline-levels 3
          :auto-preamble t
-         :body-only t ;; Only export section between <body> </body>
+         ;; :body-only t ;; Only export section between <body> </body>
          )
 
         ("linux-static"
@@ -996,8 +996,6 @@
          )
         ("linux" :components ("linux-notes" "linux-static"))
 
-<<<<<<< HEAD
-=======
         ("algorithm-notes"
          :base-directory "~/lipt/algorithm/"
          :auto-index t
@@ -1007,7 +1005,7 @@
          :publishing-function org-publish-org-to-html
          :headline-levels 3
          :auto-preamble t
-         :body-only t ;; Only export section between <body> </body>
+         ;; :body-only t ;; Only export section between <body> </body>
          )
 
         ("algorithm-static"

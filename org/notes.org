@@ -1,0 +1,16 @@
+# -*- org -*-
+
+# Time-stamp: <2011-09-23 19:03:03 Friday by ldw>
+
+#+OPTIONS: ^:nil author:nil timestamp:nil creator:nil H:3
+
+#+STARTUP: indent
+
+#+TITLE:
+
+#+AUTHOR:
+
+#+STYLE: <link rel="stylesheet" type="text/css" href="/css/org.css" />
+
+
+能忍恨骂枉怨，笑看风清云淡，于荣辱之事而心无挂碍者，天下能有几人呢？

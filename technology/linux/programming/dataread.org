@@ -1,0 +1,322 @@
+# -*- org -*-
+
+# Time-stamp: <2011-09-25 17:05:13 Sunday by ldw>
+
+#+OPTIONS: ^:nil author:nil timestamp:nil creator:nil H:3
+
+#+STARTUP: indent
+
+#+TITLE: c语言文件操作
+
+#+AUTHOR:
+
+#+STYLE: <link rel="stylesheet" type="text/css" href="/css/worg.css" />
+
+
+* c语言文件操作
+
+** 文件的打开与关闭
+
+文件在进行读写操作之前要先打开，使用完毕要关闭。所谓打开文件，实际上是建立文件的各种有关信息，并使文件指针指向该文件，以便进行其它操作。关闭文件则断开指针与文件之间的联系，也就禁止再对该文件进行操作。
+
+在Ｃ语言中，文件操作都是由库函数来完成的。在本章内将介绍主要的文件操作函数。
+
+*** 文件的打开(fopen函数)
+fopen函数用来打开一个文件，其调用的一般形式为：
+
+: 文件指针名=fopen(文件名,使用文件方式);
+
+其中，
+
++ “文件指针名”必须是被说明为FILE 类型的指针变量；
++ “文件名”是被打开文件的文件名；
++ “使用文件方式”是指文件的类型和操作要求。
++ “文件名”是字符串常量或字符串数组。
+
+例如：
+
+#+begin_src C
+FILE *fp；
+
+fp=("file a","r");
+#+end_src
+
+其意义是在当前目录下打开文件file a，只允许进行“读”操作，并使fp指向该文件。
+
+又如：
+
+#+begin_src C
+FILE *fphzk
+
+fphzk=("c:\\hzk16","rb")
+#+end_src
+
+其意义是打开C驱动器磁盘的根目录下的文件hzk16，这是一个二进制文件，只允许按二进制方式进行读操作。两个反斜线“\\ ”中的第一个表示转义字符，第二个表示根目录。
+
+使用文件的方式共有12种，下面给出了它们的符号和意义。
+
+文件使用方式
+意义
+
+1) “rt”\\
+   只读打开一个文本文件，只允许读数据
+2) “wt”\\
+   只写打开或建立一个文本文件，只允许写数据
+3) “at”\\
+   追加打开一个文本文件，并在文件末尾写数据
+4) “rb”\\
+   只读打开一个二进制文件，只允许读数据
+5) “wb”\\
+   只写打开或建立一个二进制文件，只允许写数据
+6) “ab”\\
+   追加打开一个二进制文件，并在文件末尾写数据
+7) “rt+”\\
+   读写打开一个文本文件，允许读和写
+8) “wt+”\\
+   读写打开或建立一个文本文件，允许读写
+9) “at+”\\
+   读写打开一个文本文件，允许读，或在文件末追加数据
+10) “rb+”\\
+    读写打开一个二进制文件，允许读和写
+11) “wb+”\\
+    读写打开或建立一个二进制文件，允许读和写
+12) “ab+”\\
+    读写打开一个二进制文件，允许读，或在文件末追加数据
+
+
+对于文件使用方式有以下几点说明：
+
+1) 文件使用方式由r,w,a,t,b，+六个字符拼成，各字符的含义是：
+   - r(read): 读
+   - w(write): 写
+   - a(append): 追加
+   - t(text): 文本文件，可省略不写
+   - b(banary): 二进制文件
+   - +: 读和写
+   
+2) 凡用“r”打开一个文件时，该文件必须已经存在，且只能从该文件读出。
+3) 用“w”打开的文件只能向该文件写入。若打开的文件不存在，则以指定的文件名建立该文件，若打开的文件已经存在，则将该文件删去，重建一个新文件。
+4) 若要向一个已存在的文件追加新的信息，只能用“a”方式打开文件。但此时该文件必须是存在的，否则将会出错。
+5) 在打开一个文件时，如果出错，fopen将返回一个空指针值NULL。在程序中可以用这一信息来判别是否完成打开文件的工作，并作相应的处理。因此常用以下程序段打开文件：
+
+   #+begin_src C
+   if((fp=fopen("c:\\hzk16","rb")==NULL)
+
+   {
+
+       printf("\nerror on open c:\\hzk16 file!");
+       getch();
+       exit(1);
+   }
+   #+end_src
+
+这段程序的意义是，如果返回的指针为空，表示不能打开C盘根目录下的hzk16文件，则给出提示信息“error on open c:\ hzk16 file!”，下一行getch()的功能是从键盘输入一个字符，但不在屏幕上显示。在这里，该行的作用是等待，只有当用户从键盘敲任一lose函数返回值为0。如返回非零值则表示有错误发生。
+
+** 文件的读写
+
+对文件的读和写是最常用的文件操作。在Ｃ语言中提供了多种文件读写的函数：
+
+    - 字符读写函数 ：fgetc和fputc
+    - 字符串读写函数：fgets和fputs
+    - 数据块读写函数：freed和fwrite
+    - 格式化读写函数：fscanf和fprinf
+
+
+下面分别予以介绍。使用以上函数都要求包含头文件stdio.h。
+
+*** 字符读写函数fgetc和fputc
+字符读写函数是以字符(字节)为单位的读写函数。每次可从文件读出或向文件写入一个字符。
+
+**** 读字符函数fgetc
+
+fgetc函数的功能是从指定的文件中读一个字符，函数调用的形式为：
+
+字符变量=fgetc(文件指针)；
+
+例如：
+
+#+begin_src C
+ch=fgetc(fp);
+#+end_src
+
+其意义是从打开的文件fp中读取一个字符并送入ch中。
+
+对于fgetc函数的使用有以下几点说明：
+
+1) 在fgetc函数调用中，读取的文件必须是以读或读写方式打开的。
+2) 读取字符的结果也可以不向字符变量赋值，
+    例如：\\
+    #+begin_src C
+    fgetc(fp);
+    #+end_src
+
+    但是读出的字符不能保存。
+
+3) 在文件内部有一个位置指针。用来指向文件的当前读写字节。在文件打开时，该指针总是指向文件的第一个字节。使用fgetc 函数后，该位置指针将向后移动一个字节。 因此可连续多次使用fgetc函数，读取多个字符。应注意文件指针和文件内部的位置指针不是一回事。文件指针是指向整个文件的，须在程序中定义说明，只要不重新赋值，文件指针的值是不变的。文件内部的位置指针用以指示文件内部的当前读写位置，每读写一次，该指针均向后移动，它不需在程序中定义说明，而是由系统自动设置的。
+
+
+【例】读入文件c1.txt，在屏幕上输出。
+
+#+begin_src C
+#include<stdio.h>
+int main(int argc, char ** argv)
+{
+    FILE *fp;
+    char ch;
+    if((fp=fopen("d:\\jrzh\\example\\c1.txt","rt"))==NULL)
+    {
+        printf("\nCannot open file strike any key exit!");
+        getch();
+        exit(1);
+    }
+    ch=fgetc(fp);
+    while(ch!=EOF)
+    {
+        putchar(ch);
+        ch=fgetc(fp);
+    }
+    fclose(fp);
+}
+#+end_src
+
+本例程序的功能是从文件中逐个读取字符，在屏幕上显示。程序定义了文件指针fp,以读文本文件方式打开文件“d:\\jrzh\\example\\ex1_1.c”，并使fp指向该文件。如打开文件出错，给出提示并退出程序。程序第12行先读出一个字符，然后进入循环，只要读出的字符不是文件结束标志(每上，再读入下一字符。每读一次，文件内部的位置指针向后??本程序将显示整个文件。
+
+**** 写字符函数fputc
+
+fputc函数的功能为：
+
+: fputc(字符量，文件指量或变量)
+
+例如：
+
+#+begin_src C
+fputc('a',fp);
+#+end_src
+
+其意putc函数的使用也要说明几点：
+
+1) 被写入的文件可以用写、读写、追加方式打开，用写或读写方式??写入字符从文件首开始。如需保留原有文件内容，希望写入的字??被写入的文件若不存在，则创建该文件。
+
+2) 每写入一个字符，文件内部位置指针向后移动一个字节。
+
+3) fputc函数有一个返回值，如写入成功则返回写入的字符，否则返回一个EOF。可用此来判断写符，写入一个文件，再把该文件内容读出显示在屏幕上。
+
+#+begin_src C
+#include<stdio.h>
+
+int main(int argc, char** argv)
+{
+    FILE *fp; 
+    char ch;
+    
+    if((fp=fopen("d:\\jrzh\\example\\string","wt+"))==NULL) 
+    {
+
+        printf("Cannot open file strike any key exit!"); 
+        getch(); 
+        exit(1);
+
+    }
+
+    printf("input a string:\n"); 
+    ch=getchar();
+
+    while (ch!='\n') 
+    {
+
+        fputc(ch,fp); 
+        ch=getchar();
+
+    }
+
+    rewind(fp); 
+    ch=fgetc(fp);
+
+    while(ch!=EOF) 
+    {
+
+        putchar(ch); 
+        ch=fgetc(fp);
+
+    }
+
+    printf("\n"); 
+    fclose(fp);
+
+}
+#+end_src
+
+程序中第6行以读写文本文件方式打开文件string。程序第13行从键盘读入一个字符后进入循环，当读入字符不为回车符时，则把该字符写入文件之中，然后继续从键盘读入下一字符。每输入一个字符，文件内部位置指针向后移动一个字节。写入完毕，该指针已指向文件末。如要把文件从头读出，须把指针移向文件头，程序第19行rewind函数用于把fp所指文件的内部位置指针移到文件头。第20至25行用于读出文件中的一行内容。
+
+【例】把命令行参数中的前一个文件名标识的文件，复制到后一个文件名标识的文件中，如命令行中只有一个文件名则把该文件写到标准输出文件(显示器)中。
+
+#+begin_src C
+#include<stdio.h>
+int main(int argc,char *argv[]) 
+{
+
+    FILE *fp1,*fp2; 
+    char ch;
+
+    if(argc==1) 
+    {
+
+        printf("have not enter file name strike any key exit"); 
+        getch(); 
+        exit(0);
+
+    }
+
+    if((fp1=fopen(argv[1],"rt"))==NULL) 
+    {
+
+        printf("Cannot open %s\n",argv[1]);
+
+#+end_src
+
+*给楼主找个错 @2011-08-14 16:49:05  sky*
+
+#+begin_src C
+#include<stdio.h>
+
+int main(int argc, char** argv) 
+{
+    FILE *fp; 
+    char ch;
+
+    if((fp=fopen("d:\\jrzh\\example\\string","wt+"))==NULL) //楼主这个要改成if((fp=fopen("d:\\jrzh\\example\\string","rt+"))==NULL)不然你是得不到排错信息的!!要理解w,r等几个含义!! 
+    {
+
+        printf("Cannot open file strike any key exit!"); 
+        getch(); 
+        exit(1);
+
+    }
+
+    printf("input a string:\n"); 
+    ch=getchar();
+
+    while (ch!='\n') 
+    {
+
+        fputc(ch,fp); 
+        ch=getchar();
+
+    }
+
+    rewind(fp); 
+    ch=fgetc(fp);
+
+    while(ch!=EOF) 
+    {
+
+        putchar(ch); 
+        ch=fgetc(fp);
+
+    }
+
+    printf("\n"); 
+    fclose(fp);
+
+}
+#+end_src
