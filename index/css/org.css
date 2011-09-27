@@ -174,20 +174,65 @@
   /*      Sidebar      */
   /*********************/
 
-  .sidebar {
-             float: right;
-             clear: right;
-             width: 230px;
-             margin: 0 0 2em 2em;
-             background: url(images/sidebar.gif) repeat-x 0 0;
-             }
+  /* .sidebar { */
+  /*            float: right; */
+  /*            clear: right; */
+  /*            width: 230px; */
+  /*            margin: 0 0 2em 2em; */
+  /*            background: url(images/sidebar.gif) repeat-x 0 0; */
+  /*            } */
 
+  /* .sidebar h3 { */
+  /*               font-weight: normal; */
+  /*               font-size: 2.1 em; */
+  /*               border-top: solid 1px #000; */
+  /*               color: #536D79; */
+  /*               background: #1A2125 url(images/sidebar-h3.gif) repeat-x left bottom; */
+  /*               border-top-color: #0D1114; */
+  /*               margin-bottom: 0.5em; */
+  /*               } */
+
+  /* .sidebar p { */
+  /*              margin-left: 0.5em; */
+  /*              margin-right: 1em; */
+  /*              } */
+
+  /* .sidebar li {margin-bottom: 0.8em;} */
+
+  /* .sidebar ul {padding-left: 2em;} */
+
+  /* .sidebar ul li {padding-right: 1em;} */
+
+
+  .sidebar {
+             /* background-color:#f6f6f6; */
+             /* background: url(images/sidebar.gif) repeat-x 0 0;  */
+             border:1px solid #ddd;
+             border-radius:7px;
+             moz-border-radius:7px;
+             webkit-border-radius:7px;
+             /* padding:15px; */
+             /* float:left; */
+             width:30%;
+             margin:0 20px 10px 0;
+             float:right;
+             clear:right;
+             background: url(images/sidebar.gif) repeat-x 0 0; 
+             }
+  
+  .sidebar.right{
+                  float:right;
+                  width:170px;
+                  /* margin:0 0 10px 20px; */
+                  margin: 0 0 5em 5em;
+                  }
+  .sidebar *{margin:0;padding:0;}
   .sidebar h3 {
                 font-weight: normal;
                 font-size: 2.1 em;
                 border-top: solid 1px #000;
                 color: #536D79;
-                background: #1A2125 url(images/sidebar-h3.gif) repeat-x left bottom;
+                /* background: #1A2125 url(images/sidebar-h3.gif) repeat-x left bottom; */
                 border-top-color: #0D1114;
                 margin-bottom: 0.5em;
                 }
@@ -199,10 +244,17 @@
 
   .sidebar li {margin-bottom: 0.8em;}
 
-  .sidebar ul {padding-left: 2em;}
+  .sidebar ul {
+                /* margin-left:20px; */
+                padding-left: 2em;
+                }
 
-  .sidebar ul li {padding-right: 1em;}
-
+  .sidebar ul li {
+                   /* background-image:none; */
+                   /* padding:0; */
+                   /* list-style:disc; */
+                   padding-right: 1em;
+                   }
 
   /*******************/
   /*      Posts      */
@@ -324,7 +376,10 @@
                 /*     font-size:11pt;*/
                 color: #ff3300; 
                 }
-  .outline-text-2{ color:#333300; } /* 控制正文字体 */
+  .outline-text-2{
+                   /* color:#333300; */
+                   color:#ffffff;
+                   } /* 控制正文字体 */
 
   /* title 属性 */
   

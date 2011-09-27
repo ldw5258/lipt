@@ -1,6 +1,6 @@
 # -*- org -*-
 
-# Time-stamp: <2011-09-27 00:20:11 Tuesday by ldw>
+# Time-stamp: <2011-09-27 09:25:48 Tuesday by ldw>
 
 #+OPTIONS: ^:nil author:nil timestamp:nil creator:nil H:2
 
