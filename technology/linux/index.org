@@ -1,6 +1,6 @@
 # -*- org -*-
 
-# Time-stamp: <2011-09-25 16:01:58 Sunday by ldw>
+# Time-stamp: <2011-09-27 00:20:11 Tuesday by ldw>
 
 #+OPTIONS: ^:nil author:nil timestamp:nil creator:nil H:2
 
@@ -13,7 +13,7 @@
 
 * Linux 程序设计
 
-
+[[file:gdb.org][使用gdb调试程序]]
   [[file:programming/automake.org][Linux 项目管理]]
 
 ** 数据读写

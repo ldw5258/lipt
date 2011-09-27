@@ -454,7 +454,7 @@
      (insert "Last block update at: "
              (format-time-string fmt (current-time)))))
 
-(require 'gnuplot)
+;; (require 'gnuplot)
 
 ;;; Custom Agenda Commands
 
