@@ -1,0 +1,32 @@
+# -*- org -*-
+
+# Time-stamp: <2011-09-26 12:47:56 Monday by ldw>
+
+#+OPTIONS: ^:nil author:nil timestamp:nil creator:nil H:3
+
+#+STARTUP: indent
+
+#+TITLE:
+
+#+AUTHOR:
+
+#+SETUPFILE:~/dea/templates/level-0.org
+
+help:
+
+C-c C-h
+
+
+选中：
+
+C-x h 全选
+M-h   选中当前段落？
+
+替换
+
+C-c r highlight-symbol-query-replace
+
+模板
+
+C-c C-t template-expand-template
+C-c T   my-template-expand-template

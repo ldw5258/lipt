@@ -1,0 +1,203 @@
+# -*- org -*-
+
+# Time-stamp: <2011-09-25 15:23:08 Sunday by ldw>
+
+#+OPTIONS: ^:nil author:nil timestamp:nil creator:nil H:3 LaTeX:t
+
+#+STARTUP: indent
+
+#+TITLE: 平面扫描算法
+
+#+AUTHOR:
+
+#+STYLE: <link rel="stylesheet" type="text/css" href="/css/worg.css" />
+
+
+* 理论
+
+** 动机
+
++ 机器人及运动规划: 碰撞检测
++ 计算机图形学: 光线投射- 需要确定光线与其他物体的交点.
++ 地理信息系统: 专题（Thematic）图叠加.
+
+ * 最基本的问题: 平面空间中线段的求交
+
+
+** 相交测试
+
+#+CAPTION: 
+#+LABEL: fig:
+#+ATTR_HTML:alt="" title="" align="center"
+#+ATTR_LaTeX: width=0.38\textwidth
+[[./figures/testing-intersection.png]]
+
+** 简化假设
+
++ 为了集中讨论主要观点，暂时避免处理特例，假定
+  - 所有线段都不是水平的
+  - 任意两条线段至多交于一点
+  - 没有三条和多条线段交于同一点
+
+
+#+CAPTION: 
+#+LABEL: fig:
+#+ATTR_HTML:alt="" title="" align="center"
+#+ATTR_LaTeX: width=0.38\textwidth
+[[./figures/jianhuajiashe.png]]
+
+
+
+
+
+** 平面扫描算法
+
+*** 基本思想
+#+CAPTION: 
+#+LABEL: fig:
+#+ATTR_HTML:alt="" title="" align="center"
+#+ATTR_LaTeX: width=0.38\textwidth
+[[./figures/base-idea.png]]
+
+
+*** 算法描述
+
+#+CAPTION: 
+#+LABEL: fig:
+#+ATTR_HTML:alt="" title="" align="center"
+#+ATTR_LaTeX: width=0.38\textwidth
+[[./figures/flatscanning.png]]
+#+CAPTION: 
+#+LABEL: fig:
+#+ATTR_HTML:alt="" title="" align="center"
+#+ATTR_LaTeX: width=0.38\textwidth
+[[./figures/flatscanning2.png]]
+
+
+
+*** 正确性
+
+1. 算法只检查在扫描线某个位置的相邻线段间的交点
+2. 显然不会报告错误的交点
+3. 但是否会漏交点呢？
+4. 否。如果线段si和sj相交于p.则在他们正要相交于p时一定是邻居
+
+
++ 证明
+
+  没有三线交于一点，所以只有si和sj交于p\\
+  对于正好位于p之前的扫描线，在si和sj间不会有线段。否则，p之前必有另一事件\\
+  令q为p之前的事件。则在q之后和p之前的扫描线线段的顺序必然不变。\\
+  所以,在p被处理时，si,sj在扫描线上相邻
+
+#+CAPTION: 
+#+LABEL: fig:
+#+ATTR_HTML:alt="" title="" align="center"
+#+ATTR_LaTeX: width=0.38\textwidth
+[[./figures/flatscanning-proof.png]]
+
+
+*** 算法复杂性
+
+#+CAPTION: 
+#+LABEL: fig:
+#+ATTR_HTML:alt="" title="" align="center"
+#+ATTR_LaTeX: width=0.38\textwidth
+[[./figures/flatscanning-complexity.png]]
+
+处理的事件总数为2n+k
+
+事件加入和删除可以更大一些。
+
+但每个交点至多产生两个新事件，删除两个新事件，因此O(k)个事件被处理。
+
+处理一个事件需要 $O(1)$ 次改变状态树， $O(1)$ 插入/删除事件队列
+
+因此，每个事件的处理成本是 $O(logn)$
+
+事件复杂性是 $O((n+k)logn)$
+
+
+#+INCLUDE: "datastructure.org" :lines "16-297"
+
+
+** 设计
+
+*** 数据结构
+
+扫描线状态：维护与扫描线相交的线段，使这些线段按从左到右的顺序排列
+
+1. （线段存储在）平衡二分搜索树
+2. 插入，删除，搜索O(logn) 时间
+3. 键值如何选择呢？随着L变化时，S与L的交点的x坐标也变化
+4. 使用”可变”键值，由线段的直线方程y=mx+c，
+5. 将y代入,可求得x的坐标
+6. 对某个固定的y值，对各线段进行排序比较
+
+
+#+CAPTION: 
+#+LABEL: fig:
+#+ATTR_HTML:alt="" title="" align="center"
+#+ATTR_LaTeX: width=0.38\textwidth
+[[./figures/flatscanning-datastructure.png]]
+
+
+
+** 编码实现
+
+*** 平衡二叉树
+
+
+
+** 调试&测试
+
+操作系统 :
+
+: Linux debian 2.6.32-5-amd64 #1 SMP Fri Sep 9 20:23:16 UTC 2011 x86_64 GNU/Linux
+
+
+*** 调试
+
+**** 调试错误列举
+
++ gdb 错误:
+
+#+begin_example
+error while loading shared libraries: libgettext.so.0: cannot open shared object file: No such file or directory
+#+end_example
+
+调试失败的原因是因为gdb不能找到libggg.so，可以通过下面的方法解决：
+
+1) 将库路径加到LD_LIBRARY_PATH里
+2) 执行：ldconfig YOUR_LIB_PATH
+3) 在/etc/ld.so.conf里加入库所在路径。然后执行：ldconfig
+
+上面3个方法任意一个都可以，然后再去用gdb调试就没有问题了。
+
+另:
+
+1、假设我的可执行程序是ServerName，共享库为worker.so\\
+2、我用gdb调试ServerName，想在B的某个源文件（比如worker.cpp，worker.cpp与ServerName不在同一个目录下）中设置断点，使用下面的命令行break worker.cpp:123
+
+若找不到源文件可使用如下命令设定源文件目录：
+
+设定gdb环境变量 LD_PRELOAD，在执行程序前先把共享库代码load进来指定你的链接库的位置，可以通过设定环境变量LD_LIBRARY_PATH来实现
+
+拷贝到标准的lib搜寻目录下，例如/usr/lib等
+
+b main, r,然后再设置断点就可以了，共享库只有当程序运行才开始加载的
+
++ scanf 函数
+  
+  #+begin_src C
+  scanf ("%d",&key);
+  #+end_src
+
+  输入45,输出确是32767.
+
+*改变输入策略，从文件读入测试数据。*
+
+**** TODO gdb
+正在整理
+
+**** TODO 测试数据

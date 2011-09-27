@@ -1,6 +1,6 @@
 # -*- org -*-
 
-# Time-stamp: <2011-09-22 17:39:44 Thursday by ldw>
+# Time-stamp: <2011-09-27 00:20:11 Tuesday by ldw>
 
 #+OPTIONS: ^:nil author:nil timestamp:nil creator:nil H:2
 
@@ -9,9 +9,13 @@
 
 #+TITLE: Linux 学习笔记
 
-
+#+STYLE: <link rel="stylesheet" type="text/css" href="/css/org.css" />
 
 * Linux 程序设计
 
-
+[[file:gdb.org][使用gdb调试程序]]
   [[file:programming/automake.org][Linux 项目管理]]
+
+** 数据读写
+
+*** [[file:programming/dataread.org][c语言数据读入]]

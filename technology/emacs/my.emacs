@@ -439,6 +439,7 @@
 ;; ;;              (if (looking-back "[\t ]") (goto-char (- (point) 1)) )
 ;; ;;      )
  
+
 ;; ;;      (defun thing-copy-string-to-mark(&optional arg)
 ;; ;;        " Try to copy a string and paste it to the mark
 ;; ;;      When used in shell-mode, it will paste string on shell prompt by default "
@@ -499,6 +500,68 @@
 ;;         ("x" "With deadline columns" alltodo ""
 ;;          ((org-agenda-overriding-columns-format "%20ITEM %DEADLINE")
 ;;           (org-agenda-view-columns-initially t)))
+=======
+;;      (defun thing-copy-string-to-mark(&optional arg)
+;;        " Try to copy a string and paste it to the mark
+;;      When used in shell-mode, it will paste string on shell prompt by default "
+;;        (interactive "P")
+;;        (copy-thing 'beginning-of-string 'end-of-string arg)
+;;        (paste-to-mark arg)
+;;      )
+
+;; (global-set-key (kbd "C-c s")         (quote thing-copy-string-to-mark))
+
+;;; Dynamic blocks
+(defun org-dblock-write:block-update-time (params)
+   (let ((fmt (or (plist-get params :format) "%d. %m. %Y")))
+     (insert "Last block update at: "
+             (format-time-string fmt (current-time)))))
+
+;; (require 'gnuplot)
+
+;;; Custom Agenda Commands
+
+(setq org-agenda-custom-commands 
+      '(("c" "Desk Work" tags-todo "computer" ;; (1) (2) (3) (4)
+         ((org-agenda-files '("~/www/org/widgets.org" "~/www/org/clients.org")) ;; (5)
+          (org-agenda-sorting-strategy '(priority-up effort-down))) ;; (5) cont.
+         ("~/www/html/computer.html")) ;; (6)
+        ;; ...other commands here
+        ("w" todo "STARTED") ;; (1) (3) (4)
+        ("O" "Office block agenda"
+         ((agenda "" ((org-agenda-ndays 1))) 
+          ;; limits the agenda display to a single day
+          (tags-todo "+PRIORITY=\"A\"")
+          (tags-todo "computer|office|phone")
+          (tags "project+CATEGORY=\"elephants\"")
+          (tags "review" ((org-agenda-files '("~/org/circuspeanuts.org"))))
+          ;; limits the tag search to the file circuspeanuts.org
+          (todo "WAITING"))
+         ((org-agenda-compact-blocks t))) ;; options set here apply to the entire block
+        ;;; GTD weekly review
+        ("W" "Weekly Review"
+         ((agenda "" ((org-agenda-ndays 7))) ;; review upcoming deadlines and appointments
+          ;; type "l" in the agenda to review logged items 
+          (stuck "") ;; review stuck projects as designated by org-stuck-projects
+          (todo "PROJECT") ;; review all projects (assuming you use todo keywords to designate projects)
+          (todo "MAYBE") ;; review someday/maybe items
+          (todo "WAITING"))) ;; review waiting items
+
+        ("Q" . "Custom queries") ;; gives label to "Q" 
+        ("Qa" "Archive search" search ""
+         ((org-agenda-files (file-expand-wildcards "~/archive/*.org")))) 
+        ("Qw" "Website search" search ""
+         ((org-agenda-files (file-expand-wildcards "~/website/*.org"))))
+        ("Qb" "Projects and Archive" search ""
+         ((org-agenda-text-search-extra-files (file-expand-wildcards "~/archive/*.org"))))
+        ;; searches both projects and archive directories
+        ("QA" "Archive tags search" org-tags-view "" 
+         ((org-agenda-files (file-expand-wildcards "~/archive/*.org"))))
+
+        ("x" "With deadline columns" alltodo ""
+         ((org-agenda-overriding-columns-format "%20ITEM %DEADLINE")
+          (org-agenda-view-columns-initially t)))
+>>>>>>> 989bf7e7a31c5d451463b1a26dc5c159dec10309
 
         
 ;;         ;;; Speeding up custom agenda commands
@@ -953,6 +1016,7 @@
 ;;          :publishing-function org-publish-attachment
 ;;          )
         
+
 ;;         ("math-index"
 ;;          :base-directory "~/lipt/nature/math/"
 ;;          :auto-index t
@@ -1016,6 +1080,71 @@
 ;;          :publishing-directory "~/ldw5258.github.com/algorithm"
 ;;          :publishing-function org-publish-attachment
 ;;          )
+=======
+        ("math-index"
+         :base-directory "~/lipt/nature/math/"
+         :auto-index t
+
+         :base-extension "org"
+         :publishing-directory "~/ldw5258.github.com/nature/math/"
+         :publishing-function org-publish-org-to-html
+         :headline-levels 3
+         :auto-preamble t
+         )
+        ("math" :components ("math-notes" "math-static"))
+
+        ("linux-notes"
+         :base-directory "~/lipt/technology/linux/"
+         :auto-index t
+         :recursive t
+         :base-extension "org"
+         :publishing-directory "~/ldw5258.github.com/technology/linux/"
+         :publishing-function org-publish-org-to-html
+         :headline-levels 3
+         :auto-preamble t
+         ;; :body-only t ;; Only export section between <body> </body>
+         )
+
+        ("linux-static"
+         :base-directory "~/lipt/technology/linux/"
+         :recursive t
+         :base-extension "css\\|js\\|png\\|jpg\\|jpeg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"
+         :publishing-directory "~/ldw5258.github.com/technology/linux/"
+         :publishing-function org-publish-attachment
+         )
+        
+        ("linux-index"
+         :base-directory "~/lipt/technology/linux/"
+         :auto-index t
+
+         :base-extension "org"
+         :publishing-directory "~/ldw5258.github.com/technology/linux/"
+         :publishing-function org-publish-org-to-html
+         :headline-levels 3
+         :auto-preamble t
+         )
+        ("linux" :components ("linux-notes" "linux-static"))
+
+        ("algorithm-notes"
+         :base-directory "~/lipt/algorithm/"
+         :auto-index t
+         :recursive t
+         :base-extension "org"
+         :publishing-directory "~/ldw5258.github.com/algorithm"
+         :publishing-function org-publish-org-to-html
+         :headline-levels 3
+         :auto-preamble t
+         ;; :body-only t ;; Only export section between <body> </body>
+         )
+
+        ("algorithm-static"
+         :base-directory "~/lipt/algorithm/"
+         :recursive t
+         :base-extension "css\\|js\\|png\\|jpg\\|jpeg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"
+         :publishing-directory "~/ldw5258.github.com/algorithm"
+         :publishing-function org-publish-attachment
+         )
+>>>>>>> 989bf7e7a31c5d451463b1a26dc5c159dec10309
         
 ;;         ("algorithm-index"
 ;;          :base-directory "~/lipt/algorithm/"
